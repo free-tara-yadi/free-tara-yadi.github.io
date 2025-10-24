@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News - Free Tara Yadi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=switzer@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body page="news">
+    <header>
+      <nav class="header-nav">
+        <a href="index.html">HOME</a>
+        <a href="news.html">NEWS</a>
+        <a href="">中文</a>
+        <a href="">ENGLISH</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        <section class="news-hero">
+          <h1 class="news-title">News</h1>
+          <p class="news-subtitle">关注 Tara 张雅笛的最新消息</p>
+        </section>
+
+        <section class="news-content-section">
+          <div class="news-tabs">
+            <a href="news.html" class="tab-link">全部</a>
+            <a href="news.html?cat=latest" class="tab-link">最新消息</a>
+            <a href="news.html?cat=media" class="tab-link">媒体报导</a>
+            <a href="news.html?cat=update" class="tab-link">案件进展</a>
+            <a href="news.html?cat=action" class="tab-link">行动呼吁</a>
+          </div>
+
+          <div class="filter-section">
+
+            <div class="filter-group">
+              <label for="tag-filter">按標籤篩選：</label>
+              <select id="tag-filter" class="filter-select">
+                <option value="">所有標籤</option>
+                <option value="tara">Tara张雅笛</option>
+                <option value="human-rights">人权</option>
+                <option value="student">学生</option>
+                <option value="international">国际声援</option>
+                <option value="legal">法律</option>
+                <option value="academic">学术</option>
+                <option value="tibet">西藏文化</option>
+                <option value="detention">拘留</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="date-filter">按時間篩選：</label>
+              <select id="date-filter" class="filter-select">
+                <option value="">所有時間</option>
+                <option value="week">最近一週</option>
+                <option value="month">最近一個月</option>
+                <option value="quarter">最近三個月</option>
+                <option value="year">最近一年</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="news-listing">
+            <!-- 文章列表将在这里动态加载 -->
+          </div>
+
+          <div class="pagination">
+            <a href="#" class="pagination-link prev">上一页</a>
+            <span class="pagination-current">1 / 3</span>
+            <a href="#" class="pagination-link next">下一页</a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-nav">
+        <a href="index.html">HOME</a>
+        <a href="news.html">NEWS</a>
+        <a href="">中文</a>
+        <a href="">ENGLISH</a>
+      </div>
+      <div class="footer-bottom">
+        <h2>Stand with Tara</h2>
+        <p>本博客所有文章除特别声明外，转载请注明出处。</p>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <script src="./utility.js"></script>
+    <script src="./news-loader.js"></script>
+    <script type="module" src="/pages.js"></script>
+  </body>
+</html>

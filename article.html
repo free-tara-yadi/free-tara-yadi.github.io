@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文章标题 - Free Tara Yadi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=switzer@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body page="article">
+    <header>
+      <nav class="header-nav">
+        <a href="index.html">HOME</a>
+        <a href="news.html">NEWS</a>
+        <a href="">中文</a>
+        <a href="">ENGLISH</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        <nav class="breadcrumb">
+          
+          <a href="index.html">首页</a>
+          <span class="breadcrumb-separator">></span>
+          <a href="news.html">News</a>
+          <span class="breadcrumb-separator">></span>
+          <span class="breadcrumb-current">文章标题</span>
+        </nav>
+        <span class="article-category" id="article-category">
+            <a href="#">-</a>
+          </span>
+        <h1 class="article-title" id="article-title">加载中...</h1>
+        <div class="article-meta">
+            <span class="article-date" id="article-date">-</span>
+            
+          </div>
+        <div class="article-image" id="article-image">
+            <!-- 图片将通过 CMS 动态加载 -->
+          </div>
+          
+        <article class="article-content" id="article-content">
+          <header class="article-header">
+            
+            
+          </header>
+
+          
+
+          <div class="article-body" id="article-body">
+            <p>加载中...</p>
+          </div>
+
+          <div class="article-tags" id="article-tags">
+            <!-- 标签将通过 CMS 动态加载 -->
+          </div>
+
+          <div class="article-navigation" id="article-navigation">
+            <!-- 导航将通过 CMS 动态加载 -->
+          </div>
+        </article>
+
+        <section class="related-articles">
+          <h2 class="related-title">相关文章</h2>
+          <div class="related-grid" id="related-articles">
+            <!-- 相关文章将通过 CMS 动态加载 -->
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-nav">
+        <a href="index.html">HOME</a>
+        <a href="news.html">NEWS</a>
+        <a href="">中文</a>
+        <a href="">ENGLISH</a>
+      </div>
+      <div class="footer-bottom">
+        <h2>Stand with Tara</h2>
+        <p>本博客所有文章除特别声明外，转载请注明出处。</p>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+    <script src="./utility.js"></script>
+    <script src="./cms-loader.js"></script>
+    <script src="./article-loader.js"></script>
+    <script type="module" src="/pages.js"></script>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Authenticating...</title>
+</head>
+<body>
+  <script>
+    // GitHub OAuth 回调处理
+    function getQueryVariable(variable) {
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] === variable) {
+          return decodeURIComponent(pair[1]);
+        }
+      }
+      return false;
+    }
+
+    // 检查 URL hash 中的 token
+    var hash = window.location.hash.substring(1);
+    var params = new URLSearchParams(hash);
+    var accessToken = params.get('access_token');
+    var error = params.get('error');
+    
+    if (error) {
+      console.error('OAuth 错误:', error);
+      document.body.innerHTML = '<h1>认证失败</h1><p>错误: ' + error + '</p>';
+    } else if (accessToken) {
+      // 使用 postMessage 将 token 发送给父窗口
+      if (window.opener) {
+        window.opener.postMessage(
+          {
+            source: "auth",
+            token: accessToken,
+          },
+          window.location.origin
+        );
+        window.close();
+      } else {
+        // 如果没有父窗口，重定向到管理界面
+        window.location.href = '/admin/index.html';
+      }
+    } else {
+      // 尝试从 URL 参数获取 token
+      var token = getQueryVariable("token");
+      if (token) {
+        if (window.opener) {
+          window.opener.postMessage(
+            {
+              source: "auth",
+              token: token,
+            },
+            window.location.origin
+          );
+          window.close();
+        } else {
+          window.location.href = '/admin/index.html';
+        }
+      } else {
+        document.body.innerHTML = '<h1>等待认证...</h1>';
+      }
+    }
+  </script>
+</body>
+</html>
+

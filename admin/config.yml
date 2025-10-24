@@ -1,0 +1,83 @@
+backend:
+  name: github
+  repo: free-tara-yadi/free-tara-yadi.github.io
+  branch: main # 分支名称，根据你的仓库设置调整
+  base_url: free-tara-yadi.github.io
+  site_domain: free-tara-yadi.github.io
+
+
+media_folder: "assets/uploads" # 上传的媒体文件存储位置
+public_folder: "/assets/uploads" # 公共访问路径
+
+collections:
+  - name: "news" # 新闻文章集合
+    label: "文章"
+    folder: "content/news" # 内容存储位置
+    create: true
+    slug: "{{slug}}"
+    path: "{{slug}}"
+    format: "frontmatter"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", required: true, hint: "URL路径，例如：my-news-article" }
+      - { label: "标题 (英文)", name: "title_en", widget: "string", required: false }
+      - { label: "日期", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "分类", name: "category", widget: "select", options: ["latest", "media", "action", "update"] }
+      - { label: "标签", name: "tags", widget: "select", multiple: true, allow_add: true, options: ["tara", "legal", "international", "human-rights", "student", "academic", "tibet", "detention", "media", "action"], default: [] }
+      - { label: "摘要", name: "excerpt", widget: "text" }
+      - { label: "摘要 (英文)", name: "excerpt_en", widget: "text", required: false }
+      - { label: "封面图片", name: "image", widget: "image", required: false }
+      - { label: "正文", name: "body", widget: "markdown" }
+      - { label: "正文 (英文)", name: "body_en", widget: "markdown", required: false }
+      - { label: "是否发布", name: "published", widget: "boolean", default: true }
+
+  - name: "messages" # 留言集合
+    label: "留言"
+    folder: "content/messages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "标题 (英文)", name: "title_en", widget: "string", required: false }
+      - { label: "日期", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "正文", name: "body", widget: "markdown" }
+      - { label: "正文 (英文)", name: "body_en", widget: "markdown", required: false }
+      - { label: "是否发布", name: "published", widget: "boolean", default: true }
+
+
+  - name: "faq" # 常见问题
+    label: "常见问题"
+    folder: "content/faq"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "标题 (英文)", name: "title_en", widget: "string", required: false }
+      - { label: "答案", name: "answer", widget: "text" }
+      - { label: "答案 (英文)", name: "answer_en", widget: "text", required: false }
+      - { label: "顺序", name: "order", widget: "number", default: 0 }
+      - { label: "是否发布", name: "published", widget: "boolean", default: true }
+
+
+singletons:
+  - name: home
+    label: Home Page
+    file: content/home.yaml
+    fields:
+      - { label: "最新消息Slug", name: "latest_news_slug", widget: "string", required: false, hint: "留空则自动显示最新文章" }
+      - label: "關鍵數據"
+        name: data
+        widget: list
+        fields:
+          - {label: "標題", name: data_title, widget: string}
+          - {label: "内容", name: data_content, widget: text}
+      - label: "關於Tara"
+        name: about
+        widget: list
+        fields:
+          - {label: "標題", name: about_title, widget: string}
+          - {label: "内容", name: about_content, widget: text}
+
+              
+  
+  
