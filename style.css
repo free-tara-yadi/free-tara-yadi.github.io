@@ -656,7 +656,13 @@ section.info {
 .news-tab a {
     font-size: var(--fs-base);
     color: var(--black);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
 }
+
+
 
 .news-content {
     width: var(--content-width);

@@ -420,10 +420,16 @@ class CMSLoader {
     }
 
     // 渲染新闻
-    renderNews(container) {
+    renderNews(container, category = '') {
         if (!container) return;
         
-        const newsToShow = this.news.slice(0, 4); // 显示前4条
+        // 根据分类筛选新闻
+        let filteredNews = this.news;
+        if (category) {
+            filteredNews = this.news.filter(item => item.category === category);
+        }
+        
+        const newsToShow = filteredNews.slice(0, 4); // 显示前4条
         
         if (newsToShow.length === 0) {
             container.innerHTML = '<p>暂无新闻</p>';
@@ -555,6 +561,32 @@ class CMSLoader {
         return labels[category] || category;
     }
 
+    // 初始化新闻标签切换
+    initNewsTabs() {
+        const tabLinks = document.querySelectorAll('.news-tab .tab-link');
+        const newsContainer = document.getElementById('news-container');
+        
+        if (!tabLinks.length || !newsContainer) return;
+        
+        tabLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // 移除所有active类
+                tabLinks.forEach(tab => tab.classList.remove('active'));
+                
+                // 添加active类到当前点击的标签
+                link.classList.add('active');
+                
+                // 获取分类
+                const category = link.getAttribute('data-category') || '';
+                
+                // 重新渲染新闻
+                this.renderNews(newsContainer, category);
+            });
+        });
+    }
+
     // 初始化
     async init() {
         await Promise.all([
@@ -571,6 +603,9 @@ class CMSLoader {
         this.renderAbout(document.getElementById('about-container'));
         this.renderFAQ(document.getElementById('faq-container'));
         this.renderLatestNews();
+        
+        // 初始化新闻标签切换
+        this.initNewsTabs();
     }
 }
 
