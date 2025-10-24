@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: free-tara-yadi/free-tara-yadi.github.io
+  repo: free-tara-yadi.github.io
   branch: main
   site_domain: https://free-tara-yadi.github.io
 
