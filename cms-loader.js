@@ -9,6 +9,7 @@ class CMSLoader {
     }
 
 
+    
     parseFrontmatter(content) {
         const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
         const match = content.match(frontmatterRegex);
