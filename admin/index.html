@@ -1,10 +1,20 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Content Manager</title>
-    <script src="https://unpkg.com/sveltia-cms@latest/dist/sveltia-cms.js"></script>
-  </head>
-  <body></body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://unpkg.com 'unsafe-inline' 'unsafe-eval'; connect-src 'self' https://github.com https://api.github.com https://unpkg.com https://www.githubstatus.com http://127.0.0.1:8080 http://localhost:8080; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://unpkg.com; font-src 'self' data: https://unpkg.com;">
+  <title>内容管理 - Free Tara Yadi</title>
+  <link href="/admin/config.yml" type="application/yaml" rel="cms-config-url" />
+</head>
+<body>
+  <!-- 包含 Sveltia CMS -->
+  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+  
+  <script>
+    // 注意：使用 CMS 添加新内容后，需要运行 update-index.py 脚本更新索引文件
+    console.log('CMS initialized. Remember to run update-index.py after adding new content.');
+  </script>
+</body>
 </html>
 
