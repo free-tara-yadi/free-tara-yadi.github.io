@@ -158,7 +158,7 @@ class CMSLoader {
     async loadNews() {
         try {
             // 加载新闻文件列表
-            const indexResponse = await fetch('content/news/news.json');
+            const indexResponse = await fetch('./content/news/news.json');
             if (!indexResponse.ok) {
                 console.warn('Failed to load news index');
                 return [];
@@ -168,7 +168,7 @@ class CMSLoader {
             
             for (const file of newsFiles) {
                 try {
-                    const response = await fetch(`content/news/${file}`);
+                    const response = await fetch(`./content/news/${file}`);
                     if (!response.ok) continue;
                     
                     const content = await response.text();
@@ -199,7 +199,7 @@ class CMSLoader {
     async loadMessages() {
         try {
             // 加载消息文件列表
-            const indexResponse = await fetch('content/messages/messages.json');
+            const indexResponse = await fetch('./content/messages/messages.json');
             if (!indexResponse.ok) {
                 console.warn('Failed to load messages index');
                 return [];
@@ -209,7 +209,7 @@ class CMSLoader {
             
             for (const file of messageFiles) {
                 try {
-                    const response = await fetch(`content/messages/${file}`);
+                    const response = await fetch(`./content/messages/${file}`);
                     if (!response.ok) continue;
                     
                     const content = await response.text();
@@ -240,7 +240,7 @@ class CMSLoader {
     async loadAbout() {
         try {
             // 从home.yaml文件中加载about数据
-            const response = await fetch('content/home.yaml');
+            const response = await fetch('./content/home.yaml');
             if (!response.ok) {
                 console.warn('Failed to load home.yaml');
                 return [];
@@ -324,7 +324,7 @@ class CMSLoader {
     async loadFAQ() {
         try {
             // 加载FAQ文件列表
-            const indexResponse = await fetch('content/faq/faq.json');
+            const indexResponse = await fetch('./content/faq/faq.json');
             if (!indexResponse.ok) {
                 console.warn('Failed to load FAQ index');
                 return [];
@@ -334,7 +334,7 @@ class CMSLoader {
             
             for (const file of faqFiles) {
                 try {
-                    const response = await fetch(`content/faq/${file}`);
+                    const response = await fetch(`./content/faq/${file}`);
                     if (!response.ok) continue;
                     
                     const content = await response.text();
@@ -364,7 +364,7 @@ class CMSLoader {
     // 加载首页配置
     async loadHome() {
         try {
-            const response = await fetch('content/home.yaml');
+            const response = await fetch('./content/home.yaml');
             if (!response.ok) {
                 console.warn('Failed to load home config');
                 return null;

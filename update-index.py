@@ -36,5 +36,8 @@ if __name__ == '__main__':
     # 更新 messages 索引
     update_index('content/messages', 'content/messages/messages.json')
     
+    # 更新 FAQ 索引
+    update_index('content/faq', 'content/faq/faq.json')
+    
     print("All index files updated successfully!")
 
