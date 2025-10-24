@@ -1,9 +1,8 @@
 backend:
   name: github
   repo: free-tara-yadi/free-tara-yadi.github.io
-  branch: main # 分支名称，根据你的仓库设置调整
-  base_url: free-tara-yadi.github.io
-  site_domain: free-tara-yadi.github.io
+  branch: main
+  site_domain: https://free-tara-yadi.github.io
 
 
 media_folder: "assets/uploads" # 上传的媒体文件存储位置
