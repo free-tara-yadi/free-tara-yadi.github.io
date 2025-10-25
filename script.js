@@ -40,6 +40,16 @@ class ScriptManager {
                 this.currentScreenSize = newScreenSize;
                 this.cleanup();
                 this.initializeAnimations();
+                
+                // 確保在移動設備上恢復滾動
+                if (newScreenSize === 'mobile') {
+                    document.documentElement.style.overflow = 'auto';
+                    document.body.style.overflow = 'auto';
+                } else {
+                    // 在桌面設備上保持 hidden（因為有 Lenis）
+                    document.documentElement.style.overflow = 'hidden';
+                    document.body.style.overflow = 'hidden';
+                }
             }
         };
         
