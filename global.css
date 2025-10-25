@@ -663,6 +663,10 @@ body[page="article"] .container {
     margin-bottom: 2rem;
 }
 
+.article-body img {
+    width: var(--about-width);
+}
+
 .article-tags {
     display: flex;
     flex-direction: row;
