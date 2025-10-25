@@ -1,0 +1,63 @@
+name: Auto Update Content Index
+
+# 当推送到 main 分支且 content 目录有变化时触发
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'content/**'
+  # 允许手动触发
+  workflow_dispatch:
+
+jobs:
+  update-content-index:
+    runs-on: ubuntu-latest
+    
+    # 设置权限以允许推送更改
+    permissions:
+      contents: write
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: 🐍 Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: 🔄 Update content indices
+      run: |
+        echo "开始更新内容索引..."
+        python3 rebuild-content-index.py
+        echo "索引更新完成"
+    
+    - name: 📋 Check for changes
+      id: check-changes
+      run: |
+        if git diff --quiet; then
+          echo "changed=false" >> $GITHUB_OUTPUT
+          echo "没有检测到变化"
+        else
+          echo "changed=true" >> $GITHUB_OUTPUT
+          echo "检测到以下变化："
+          git diff --name-only
+        fi
+    
+    - name: 💾 Commit and push changes
+      if: steps.check-changes.outputs.changed == 'true'
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "GitHub Actions"
+        
+        git add content/*/*.json
+        git commit -m "🤖 自动更新内容索引
+
+        - 更新了内容目录的 JSON 索引文件
+        - 由内容变更触发
+        - 原始提交: ${{ github.sha }}"
+        
+        git push
+        echo "✅ 更改已提交并推送"

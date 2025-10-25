@@ -28,6 +28,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Update content indices
+        run: |
+          echo "🔄 更新内容索引..."
+          python3 rebuild-content-index.py
+          echo "✅ 索引更新完成"
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 

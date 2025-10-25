@@ -1,0 +1,58 @@
+name: Update Content Index
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'content/**/*.md'
+      - 'content/**/*.yaml'
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  update-index:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 需要写入权限来提交更改
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0 # 获取完整历史记录
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Update content indices
+      run: |
+        echo "🔍 Running content index update..."
+        python3 rebuild-content-index.py
+        echo "✅ Index update completed"
+    
+    - name: Check for changes
+      id: verify-changed-files
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "changed=true" >> $GITHUB_OUTPUT
+          echo "📄 Found changes to commit"
+          git status --porcelain
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+          echo "ℹ️ No changes detected"
+        fi
+    
+    - name: Commit and push changes
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add content/*/*.json
+        git commit -m "🤖 Auto-update content indices
+
+        - Updated JSON index files for content directories
+        - Triggered by content changes
+        - Commit: ${{ github.sha }}"
+        git push
+        echo "✅ Changes committed and pushed"
