@@ -21,6 +21,7 @@ class ScriptManager {
             aboutAnimation(),
             mapAnimation(),
             headerScrollHandler()
+            // utility.js 的動畫
         ];
 
         cleanups.forEach(fn => {
@@ -35,15 +36,18 @@ class ScriptManager {
         this.resizeHandler = () => {
             const newScreenSize = window.innerWidth < 1024 ? 'mobile' : 'desktop';
             
+            // 如果屏幕尺寸發生變化（桌面 ↔ 移動），重新初始化
             if (newScreenSize !== this.currentScreenSize) {
                 this.currentScreenSize = newScreenSize;
                 this.cleanup();
                 this.initializeAnimations();
                 
+                // 確保在移動設備上恢復滾動
                 if (newScreenSize === 'mobile') {
                     document.documentElement.style.overflow = 'auto';
                     document.body.style.overflow = 'auto';
                 } else {
+                    // 在桌面設備上保持 hidden（因為有 Lenis）
                     document.documentElement.style.overflow = 'hidden';
                     document.body.style.overflow = 'hidden';
                 }
@@ -67,7 +71,9 @@ class ScriptManager {
 
 // 初始化 ScriptManager
 document.addEventListener('DOMContentLoaded', () => {
+    // 等待所有樣式和資源載入完成
     window.addEventListener('load', () => {
+        // 額外等待一幀確保所有渲染完成
         requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 window.scriptManager = new ScriptManager();
@@ -84,41 +90,20 @@ window.addEventListener('beforeunload', () => {
     }
 });
 
-// 獲取穩定的視窗高度（修復 iOS 地址欄問題）
-function getStableHeight() {
-    // 在移動設備上使用固定的初始高度
-    if (window.innerWidth < 1024) {
-        if (!window.stableHeight) {
-            window.stableHeight = window.innerHeight;
-        }
-        return window.stableHeight;
-    }
-    return window.innerHeight;
-}
-
 // Intro 動畫函數
 function introAnimation() {
-    const isMobile = window.innerWidth < 1024;
-    let stickyHeight = getStableHeight() * 5;
+
+    let stickyHeight = window.innerHeight * 5;
 
     let tl = gsap.timeline({
         scrollTrigger: {
             trigger: ".intro",
             start: "top top",
             end: () => `+=${stickyHeight}px`,
-            scrub: isMobile ? 1 : true, // 移動設備增加平滑度
+            scrub: true,
             pin: true,
-            pinSpacing: true,
-            anticipatePin: 1, // 預測 pin 行為
             refreshPriority: 2,
-            invalidateOnRefresh: true,
-            // 移動設備專用設定
-            ...(isMobile && {
-                pinType: "fixed", // 使用 fixed 定位
-                pinnedContainer: ".intro", // 明確指定 pin 容器
-                fastScrollEnd: true, // 快速滾動時立即結束
-                preventOverlaps: true // 防止重疊
-            })
+            invalidateOnRefresh: true
         }
     });
 
@@ -135,9 +120,6 @@ function introAnimation() {
 
     tl.to(".kv-img-wrap", {
         clipPath: () => {
-            if (isMobile) {
-                return "inset(15vw 15vw 15vw 15vw)";
-            }
             const value = gsap.utils.mapRange(1024, 1440, 42, 38, window.innerWidth);
             return `inset(${value}vw ${value}vw ${value}vw ${value}vw)`;
         },
@@ -165,6 +147,7 @@ function introAnimation() {
         duration: 0.5
     });
     
+
     tl.from(".condition > *", {
         opacity: 0,
         ease: "none",
@@ -178,27 +161,19 @@ function introAnimation() {
         stagger: 0.3,
     });
 
-    // Resize 處理（避免在移動設備上頻繁觸發）
-    let resizeTimer;
+    // Resize 處理
     const handleResize = () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            const newIsMobile = window.innerWidth < 1024;
-            // 只在桌面設備或屏幕方向改變時才刷新
-            if (!newIsMobile || Math.abs(window.innerWidth - window.innerHeight) > 200) {
-                stickyHeight = getStableHeight() * 5;
-                if (tl.scrollTrigger) {
-                    tl.scrollTrigger.refresh();
-                }
-            }
-        }, 250); // 延遲執行
+        stickyHeight = window.innerHeight * 5;
+        
+        if (tl.scrollTrigger) {
+            tl.scrollTrigger.refresh();
+        }
     };
     
     window.addEventListener('resize', handleResize);
 
     // 返回清理函數
     return () => {
-        clearTimeout(resizeTimer);
         if (tl.scrollTrigger) {
             tl.scrollTrigger.kill();
         }
@@ -207,27 +182,18 @@ function introAnimation() {
     };
 }
 
+
 // Map 動畫函數
 function mapAnimation() {
-    const isMobile = window.innerWidth < 1024;
-    
     let maptl = gsap.timeline({
         scrollTrigger: {
             trigger: ".location",
             start: "top top",
             end: "bottom center",
-            scrub: isMobile ? 1 : true,
+            scrub: true,
             pin: true,
-            pinSpacing: true,
-            anticipatePin: 1,
             refreshPriority: 1,
-            invalidateOnRefresh: true,
-            ...(isMobile && {
-                pinType: "fixed",
-                pinnedContainer: ".location",
-                fastScrollEnd: true,
-                preventOverlaps: true
-            })
+            invalidateOnRefresh: true
         }
     });
 
@@ -235,42 +201,32 @@ function mapAnimation() {
     maptl.set(".map-reveal", { opacity: 0 });
 
     maptl.to(".map-wrap", {
-        clipPath: isMobile 
-            ? "polygon(20% 10%, 80% 10%, 80% 90%, 20% 90%)"
-            : "polygon(30% 15%, 70% 15%, 70% 85%, 30% 85%)",
+        clipPath: "polygon(30% 15%, 70% 15%, 70% 85%, 30% 85%)",
         ease: "none",
     });
 
     maptl.to(".map-wrap img", {
         scale: 1.2,
         ease: "none",
-    }, 0);
+    },0);
 
     maptl.to(".map-reveal", {
         opacity: 1,
         ease: "none",
         stagger: { amount: 0.5, from: "end" },
-    }, 0);
+    },0);
 
     // Resize 處理
-    let resizeTimer;
     const handleResize = () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            const newIsMobile = window.innerWidth < 1024;
-            if (!newIsMobile || Math.abs(window.innerWidth - window.innerHeight) > 200) {
-                if (maptl.scrollTrigger) {
-                    maptl.scrollTrigger.refresh();
-                }
-            }
-        }, 250);
+        if (maptl.scrollTrigger) {
+            maptl.scrollTrigger.refresh();
+        }
     };
     
     window.addEventListener('resize', handleResize);
 
     // 返回清理函數
     return () => {
-        clearTimeout(resizeTimer);
         if (maptl.scrollTrigger) {
             maptl.scrollTrigger.kill();
         }
@@ -279,28 +235,20 @@ function mapAnimation() {
     };
 }
 
+
 // About 動畫函數
 function aboutAnimation() {
-    const isMobile = window.innerWidth < 1024;
-    let stickyHeight2 = getStableHeight() * 5;
+    let stickyHeight2 = window.innerHeight * 5;
     
     let tl2 = gsap.timeline({
         scrollTrigger: {
             trigger: ".about-tara",
             start: "top top",
             end: () => `+=${stickyHeight2}px`,
-            scrub: isMobile ? 1 : true,
+            scrub: true,
             pin: true,
-            pinSpacing: true,
-            anticipatePin: 1,
             refreshPriority: -1,
-            invalidateOnRefresh: true,
-            ...(isMobile && {
-                pinType: "fixed",
-                pinnedContainer: ".about-tara",
-                fastScrollEnd: true,
-                preventOverlaps: true
-            })
+            invalidateOnRefresh: true
         }
     });
 
@@ -317,25 +265,18 @@ function aboutAnimation() {
     }, 0.2);
 
     // Resize 處理
-    let resizeTimer;
     const handleResize = () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            const newIsMobile = window.innerWidth < 1024;
-            if (!newIsMobile || Math.abs(window.innerWidth - window.innerHeight) > 200) {
-                stickyHeight2 = getStableHeight() * 5;
-                if (tl2.scrollTrigger) {
-                    tl2.scrollTrigger.refresh();
-                }
-            }
-        }, 250);
+        stickyHeight2 = window.innerHeight * 5;
+        
+        if (tl2.scrollTrigger) {
+            tl2.scrollTrigger.refresh();
+        }
     };
     
     window.addEventListener('resize', handleResize);
 
     // 返回清理函數
     return () => {
-        clearTimeout(resizeTimer);
         if (tl2.scrollTrigger) {
             tl2.scrollTrigger.kill();
         }
@@ -344,9 +285,15 @@ function aboutAnimation() {
     };
 }
 
+
+
+ 
+
 // Header 滾動隱藏/顯示功能
 function headerScrollHandler() {
+    // 檢查屏幕寬度，小於 1024px 時禁用 header 滾動處理
     if (window.innerWidth < 1024) {
+        // 在移動設備上，返回空的清理函數
         return () => {};
     }
     
@@ -357,6 +304,7 @@ function headerScrollHandler() {
     function updateHeader() {
         const currentScrollY = window.scrollY;
         
+        // 特殊情況：滾動到最上方時必須處理
         if (currentScrollY <= 0) {
             header.classList.remove('show');
             lastScrollY = currentScrollY;
@@ -364,14 +312,17 @@ function headerScrollHandler() {
             return;
         }
         
+        // 如果滾動距離很小，不處理
         if (Math.abs(currentScrollY - lastScrollY) < 5) {
             ticking = false;
             return;
         }
 
         if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            // 向下滾動且超過100px時隱藏header
             header.classList.remove('show');
         } else if (currentScrollY < lastScrollY && currentScrollY > 0) {
+            // 向上滾動且不在最上方時顯示header
             header.classList.add('show');
         }
 
@@ -387,13 +338,18 @@ function headerScrollHandler() {
     }
 
     function handleResize() {
+        // 在resize時重新計算當前滾動位置
         lastScrollY = window.scrollY;
+        // 觸發一次header狀態更新
         requestTick();
     }
 
+    // 監聽滾動事件
     window.addEventListener('scroll', requestTick, { passive: true });
+    // 監聽resize事件
     window.addEventListener('resize', handleResize, { passive: true });
 
+    // 返回清理函數
     return () => {
         window.removeEventListener('scroll', requestTick);
         window.removeEventListener('resize', handleResize);

@@ -29,6 +29,14 @@
     font-style: normal;
 }
 
+
+@font-face {
+    font-family: "Marcellus", serif;
+    src: url('./assets/Marcellus-Regular.ttf') format('ttf');
+    font-weight: 400;
+    font-style: normal;
+}
+
 body,
 html {
     font-size: 10px;
@@ -48,7 +56,6 @@ html {
 
 /* 防止 iOS 彈性滾動 */
 body {
-    overscroll-behavior-y: none;
     -webkit-overflow-scrolling: touch;
 }
 
