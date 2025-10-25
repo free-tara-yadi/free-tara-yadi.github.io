@@ -51,6 +51,8 @@ html {
     letter-spacing: 0%;
     text-transform: uppercase;
     font-family: SweiSpringCJKsc;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
 }
 
 
