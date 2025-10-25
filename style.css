@@ -366,19 +366,19 @@
 }
 
 .about-tara {
-    
     position: relative;
     width: 100vw;
-    height: 100vh;
+    height: 400vh;
 }
 
 
 .who-tara {
+    position: sticky;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     overflow: clip;
-    
-    
 }
 
 .who-tara .title-wrap {
@@ -394,7 +394,6 @@
 }
 
 .who-tara .en-title {
-    
     font-family: "Marcellus", serif;
     font-size: 9vw;
     color: #DEDFC6;
@@ -410,13 +409,11 @@
 }
 
 .doves {
-
     position: absolute;
     top: 0;
     left: 0;
     object-fit: cover;
     height: auto;
-
 
 }
 
@@ -447,8 +444,7 @@
 
 .about-mask {
     width: 100vw;
-    height: 100vh;
-    position: absolute;
+    height: 400vh;
     bottom: 0;
     left: 0;
     /* 讓整個區塊漸層淡出（包含內部元素） */

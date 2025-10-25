@@ -3,8 +3,8 @@ class ScriptManager {
         this.cleanupFunctions = [];
         this.currentScreenSize = window.innerWidth < 1024 ? 'mobile' : 'desktop';
         // 初始化時禁用滾動（同時設置 html 和 body）
-        document.documentElement.style.overflow = 'hidden';
-        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'clip';
+        document.body.style.overflow = 'clip';
     }
 
     init() {
@@ -252,11 +252,6 @@ function aboutAnimation() {
         }
     });
 
-    tl2.from(".about-content", {
-        yPercent: 100,
-        ease: "none",
-        duration: 4,
-    }, 0.2);
 
     tl2.to(".about-slide-img", {
         opacity: 1,
