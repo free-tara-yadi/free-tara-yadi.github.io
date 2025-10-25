@@ -445,6 +445,7 @@
 .about-mask {
     width: 100vw;
     height: 400vh;
+    position: absolute;
     bottom: 0;
     left: 0;
     /* 讓整個區塊漸層淡出（包含內部元素） */

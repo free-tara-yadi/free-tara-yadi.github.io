@@ -244,10 +244,8 @@ function aboutAnimation() {
         scrollTrigger: {
             trigger: ".about-tara",
             start: "top top",
-            end: () => `+=${stickyHeight2}px`,
+            end: "bottom bottom",
             scrub: true,
-            pin: true,
-            refreshPriority: -1,
             invalidateOnRefresh: true
         }
     });
@@ -279,7 +277,6 @@ function aboutAnimation() {
         window.removeEventListener('resize', handleResize);
     };
 }
-
 
 
  

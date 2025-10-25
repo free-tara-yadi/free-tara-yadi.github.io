@@ -41,7 +41,6 @@ body,
 html {
     font-size: 10px;
     width: 100%;
-    overflow-x: clip;
     height: fit-content;
     margin: 0;
     padding: 0;
