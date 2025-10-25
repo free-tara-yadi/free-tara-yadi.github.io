@@ -102,7 +102,7 @@ function introAnimation() {
             end: () => `+=${stickyHeight}px`,
             scrub: true,
             pin: true,
-            refreshPriority: 1,
+            refreshPriority: 2,
             invalidateOnRefresh: true
         }
     });
@@ -182,54 +182,6 @@ function introAnimation() {
     };
 }
 
-// About 動畫函數
-function aboutAnimation() {
-    let stickyHeight2 = window.innerHeight * 5;
-    
-    let tl2 = gsap.timeline({
-        scrollTrigger: {
-            trigger: ".about-tara",
-            start: "top top",
-            end: () => `+=${stickyHeight2}px`,
-            scrub: true,
-            pin: true,
-            invalidateOnRefresh: true
-        }
-    });
-
-    tl2.from(".about-content", {
-        yPercent: 100,
-        ease: "none",
-        duration: 4,
-    }, 0.2);
-
-    tl2.to(".about-slide-img", {
-        opacity: 1,
-        ease: "none",
-        stagger: 1,
-    }, 0.2);
-
-    // Resize 處理
-    const handleResize = () => {
-        stickyHeight2 = window.innerHeight * 5;
-        
-        if (tl2.scrollTrigger) {
-            tl2.scrollTrigger.refresh();
-        }
-    };
-    
-    window.addEventListener('resize', handleResize);
-
-    // 返回清理函數
-    return () => {
-        if (tl2.scrollTrigger) {
-            tl2.scrollTrigger.kill();
-        }
-        tl2.kill();
-        window.removeEventListener('resize', handleResize);
-    };
-}
-
 
 // Map 動畫函數
 function mapAnimation() {
@@ -240,6 +192,7 @@ function mapAnimation() {
             end: "bottom center",
             scrub: true,
             pin: true,
+            refreshPriority: 1,
             invalidateOnRefresh: true
         }
     });
@@ -281,6 +234,58 @@ function mapAnimation() {
         window.removeEventListener('resize', handleResize);
     };
 }
+
+
+// About 動畫函數
+function aboutAnimation() {
+    let stickyHeight2 = window.innerHeight * 5;
+    
+    let tl2 = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".about-tara",
+            start: "top top",
+            end: () => `+=${stickyHeight2}px`,
+            scrub: true,
+            pin: true,
+            refreshPriority: -1,
+            invalidateOnRefresh: true
+        }
+    });
+
+    tl2.from(".about-content", {
+        yPercent: 100,
+        ease: "none",
+        duration: 4,
+    }, 0.2);
+
+    tl2.to(".about-slide-img", {
+        opacity: 1,
+        ease: "none",
+        stagger: 1,
+    }, 0.2);
+
+    // Resize 處理
+    const handleResize = () => {
+        stickyHeight2 = window.innerHeight * 5;
+        
+        if (tl2.scrollTrigger) {
+            tl2.scrollTrigger.refresh();
+        }
+    };
+    
+    window.addEventListener('resize', handleResize);
+
+    // 返回清理函數
+    return () => {
+        if (tl2.scrollTrigger) {
+            tl2.scrollTrigger.kill();
+        }
+        tl2.kill();
+        window.removeEventListener('resize', handleResize);
+    };
+}
+
+
 
  
 
