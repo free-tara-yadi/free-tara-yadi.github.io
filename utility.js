@@ -66,8 +66,8 @@ function lenisInitialize() {
     // 檢查屏幕寬度，小於 1024px 時禁用 Lenis
     if (window.innerWidth < 1024) {
         // 在移動設備上，恢復滾動功能
-        document.documentElement.style.overflow = 'auto';
-        document.body.style.overflow = 'auto';
+        document.documentElement.style.overflow = 'clip';
+        document.body.style.overflow = 'clip';
         
         // 設置基本的滾動恢復
         window.history.scrollRestoration = "manual";
