@@ -751,6 +751,12 @@ section.info {
 
 
   @media screen and (max-width: 1024px) {
+
+    
+    .tablet-hide {
+        display: none;
+    }
+
     .kv-img-wrap {
         width: auto;
         height: 140vh;
@@ -790,6 +796,10 @@ section.info {
 }
 
 @media screen and (max-width: 600px) {
+
+    .mobile-hide {
+        display: none;
+    }
 
     .sm-card {
         visibility: hidden;

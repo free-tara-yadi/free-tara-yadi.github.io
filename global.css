@@ -20,6 +20,14 @@
     font-weight: 300;
 }
 
+@font-face {
+    font-family: "Switzer", sans-serif;
+    src: url('./assets/Switzer-Variable.woff2') format('woff2'),
+         url('./assets/Switzer-Variable.woff') format('woff');
+    font-weight: 100 900;
+    font-display: swap;
+    font-style: normal;
+}
 
 body,
 html {
@@ -586,6 +594,7 @@ body[page="news"] .news-card h3 {
     .news-tabs {
         flex-direction: column;
         align-items: center;
+        gap: 1rem;
     }
     
     .pagination {

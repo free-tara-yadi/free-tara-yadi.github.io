@@ -19,6 +19,7 @@ class ScriptManager {
             parallaxEffect(),
             introAnimation(),
             aboutAnimation(),
+            mapAnimation(),
             headerScrollHandler()
             // utility.js 的動畫
         ];
@@ -229,6 +230,60 @@ function aboutAnimation() {
     };
 }
 
+
+// Map 動畫函數
+function mapAnimation() {
+    let maptl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".location",
+            start: "top top",
+            end: "bottom center",
+            scrub: true,
+            pin: true,
+            invalidateOnRefresh: true
+        }
+    });
+
+    maptl.set(".map-wrap", { clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" });
+    maptl.set(".map-reveal", { opacity: 0 });
+
+    maptl.to(".map-wrap", {
+        clipPath: "polygon(30% 15%, 70% 15%, 70% 85%, 30% 85%)",
+        ease: "none",
+    });
+
+    maptl.to(".map-wrap img", {
+        scale: 1.2,
+        ease: "none",
+    },0);
+
+    maptl.to(".map-reveal", {
+        opacity: 1,
+        ease: "none",
+        stagger: { amount: 0.5, from: "end" },
+    },0);
+
+    // Resize 處理
+    const handleResize = () => {
+        if (maptl.scrollTrigger) {
+            maptl.scrollTrigger.refresh();
+        }
+    };
+    
+    window.addEventListener('resize', handleResize);
+
+    // 返回清理函數
+    return () => {
+        if (maptl.scrollTrigger) {
+            maptl.scrollTrigger.kill();
+        }
+        maptl.kill();
+        window.removeEventListener('resize', handleResize);
+    };
+}
+
+ 
+
 // Header 滾動隱藏/顯示功能
 function headerScrollHandler() {
     // 檢查屏幕寬度，小於 1024px 時禁用 header 滾動處理
@@ -295,40 +350,3 @@ function headerScrollHandler() {
         window.removeEventListener('resize', handleResize);
     };
 }
-
-
-
-
-
-    let maptl = gsap.timeline({
-        scrollTrigger: {
-            trigger: ".location",
-            start: "top top",
-            end: "bottom center",
-            scrub: true,
-            pin: true,
-            invalidateOnRefresh: true
-        }
-    });
-
-
-    maptl.set(".map-wrap", { clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" });
-    maptl.set(".map-reveal", { opacity: 0 });
-
-    maptl.to(".map-wrap", {
-        clipPath: "polygon(30% 15%, 70% 15%, 70% 85%, 30% 85%)",
-        ease: "none",
-    });
-
-    maptl.to(".map-wrap img", {
-        scale: 1.2,
-        ease: "none",
-    },0);
-
-    maptl.to(".map-reveal", {
-        opacity: 1,
-        ease: "none",
-        stagger: { amount: 0.5, from: "end" },
-    },0);
-
- 
