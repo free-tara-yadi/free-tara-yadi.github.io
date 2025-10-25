@@ -221,6 +221,12 @@ function aboutAnimation() {
 
 // Header 滾動隱藏/顯示功能
 function headerScrollHandler() {
+    // 檢查屏幕寬度，小於 1024px 時禁用 header 滾動處理
+    if (window.innerWidth < 1024) {
+        // 在移動設備上，返回空的清理函數
+        return () => {};
+    }
+    
     const header = document.querySelector('.header-nav');
     let lastScrollY = window.scrollY;
     let ticking = false;

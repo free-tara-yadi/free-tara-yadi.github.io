@@ -261,13 +261,19 @@
     <script src="./cms-loader.js"></script>
     <script type="module" src="./script.js"></script>
     <script>
-      // 计算从2025年7月31日到今天的天数
-      const startDate = new Date('2025-07-31');
-      const today = new Date();
-      const diffTime = today - startDate;
-      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-      
-      document.getElementById('days-count').textContent = diffDays;
-      document.getElementById('detention-days').textContent = diffDays;
+      // 等待DOM加载完成
+      document.addEventListener('DOMContentLoaded', function() {
+        // 计算从2025年7月31日到今天的天数
+        const startDate = new Date('2025-07-31');
+        const today = new Date();
+        const diffTime = today - startDate;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        
+        const daysCountEl = document.getElementById('days-count');
+        const detentionDaysEl = document.getElementById('detention-days');
+        
+        if (daysCountEl) daysCountEl.textContent = diffDays;
+        if (detentionDaysEl) detentionDaysEl.textContent = diffDays;
+      });
     </script>
 </html>
