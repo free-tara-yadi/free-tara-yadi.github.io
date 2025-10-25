@@ -424,19 +424,18 @@ footer {
 }
 
 .tab-link {
-    padding: 0.75rem 1.5rem;
-    border: 1px solid var(--gray-300);
+    font-size: var(--fs-base);
+    padding: 1rem 2rem;
     border-radius: 2rem;
     text-decoration: none;
     color: var(--black);
-    font-weight: 500;
     transition: all 0.3s ease;
 }
 
 .tab-link:hover,
 .tab-link.active {
     background-color: var(--black);
-    color: white;
+    color: #DEDFC6;
 }
 
 .filter-section {

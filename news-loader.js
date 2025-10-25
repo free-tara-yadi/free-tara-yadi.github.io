@@ -388,9 +388,36 @@ class NewsLoader {
             }
         }
 
+        // 设置active tab
+        this.setActiveTab(cat);
+
         // 如果有 URL 参数，应用筛选器
         if (tag || cat) {
             this.applyFilters();
+        }
+    }
+
+    // 设置active tab
+    setActiveTab(category) {
+        const tabLinks = document.querySelectorAll('.news-tabs .tab-link');
+        
+        // 移除所有active类
+        tabLinks.forEach(link => {
+            link.classList.remove('active');
+        });
+
+        // 根据category参数设置对应的tab为active
+        if (category) {
+            const activeTab = document.querySelector(`.news-tabs .tab-link[href*="cat=${category}"]`);
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+        } else {
+            // 如果没有category参数，设置"全部"tab为active
+            const allTab = document.querySelector('.news-tabs .tab-link[href="news.html"]');
+            if (allTab) {
+                allTab.classList.add('active');
+            }
         }
     }
 

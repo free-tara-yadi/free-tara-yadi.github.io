@@ -690,6 +690,33 @@ function textLinkAnimation() {
     };
 }
 
+// 计算从2025年7月31日到当天的天数
+function updateDetentionDays() {
+    // 设置失踪日期：2025年7月31日
+    const missingDate = new Date('2025-07-31');
+    const currentDate = new Date();
+    
+    // 计算天数差
+    const timeDifference = currentDate.getTime() - missingDate.getTime();
+    const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+    
+    // 查找天数显示元素
+    const dayElement = document.querySelector('.data-number .days');
+    
+    if (dayElement) {
+        // 更新天数
+        dayElement.textContent = daysDifference;
+        
+        // 同时更新描述文本中的天数
+        const descriptionElement = dayElement.closest('.info').querySelector('p');
+        if (descriptionElement) {
+            descriptionElement.textContent = descriptionElement.textContent.replace(/超过\d+天/, `超过${daysDifference}天`);
+        }
+    }
+    
+    return daysDifference;
+}
+
 
 
 

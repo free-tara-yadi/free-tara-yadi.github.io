@@ -8,6 +8,8 @@ class ScriptManager {
 
     init() {
         this.initializeAnimations();
+        // 更新羁押天数
+        updateDetentionDays();
         window.scrollTo(0, 0);
     }
 
