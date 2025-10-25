@@ -1,6 +1,7 @@
 class ScriptManager {
     constructor() {
         this.cleanupFunctions = [];
+        this.currentScreenSize = window.innerWidth < 1024 ? 'mobile' : 'desktop';
         // 初始化時禁用滾動（同時設置 html 和 body）
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
@@ -8,6 +9,7 @@ class ScriptManager {
 
     init() {
         this.initializeAnimations();
+        this.setupResizeHandler();
         window.scrollTo(0, 0);
     }
 
@@ -29,10 +31,30 @@ class ScriptManager {
         });
     }
 
+    setupResizeHandler() {
+        this.resizeHandler = () => {
+            const newScreenSize = window.innerWidth < 1024 ? 'mobile' : 'desktop';
+            
+            // 如果屏幕尺寸發生變化（桌面 ↔ 移動），重新初始化
+            if (newScreenSize !== this.currentScreenSize) {
+                this.currentScreenSize = newScreenSize;
+                this.cleanup();
+                this.initializeAnimations();
+            }
+        };
+        
+        window.addEventListener('resize', this.resizeHandler);
+    }
+
     cleanup() {
         this.cleanupFunctions.forEach(fn => fn());
         this.cleanupFunctions = [];
         window.animationManager.destroy();
+        
+        if (this.resizeHandler) {
+            window.removeEventListener('resize', this.resizeHandler);
+            this.resizeHandler = null;
+        }
     }
 }
 
