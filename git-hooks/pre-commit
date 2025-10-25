@@ -1,0 +1,31 @@
+#!/bin/bash
+# Git pre-commit hook
+# 自动重建 content 目录的 JSON 索引文件
+
+echo "🔍 Checking for content changes..."
+
+# 检查是否有 content 目录下的文件被修改
+if git diff --cached --name-only | grep -q "^content/"; then
+    echo "📝 Content files detected, rebuilding indices..."
+    
+    # 运行索引重建脚本
+    python3 rebuild-content-index.py
+    
+    # 检查脚本是否成功执行
+    if [ $? -eq 0 ]; then
+        echo "✅ Content indices updated successfully"
+        
+        # 检查是否有新的索引文件需要添加到提交中
+        if git diff --name-only | grep -q "\.json$"; then
+            echo "📄 Adding updated index files to commit..."
+            git add content/*/*.json
+        fi
+    else
+        echo "❌ Failed to update content indices"
+        exit 1
+    fi
+else
+    echo "ℹ️  No content changes detected, skipping index update"
+fi
+
+echo "🚀 Pre-commit hook completed"
