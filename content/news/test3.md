@@ -8,7 +8,7 @@ tags:
   - media
 excerpt: 文章內文文字文章內文文字文章內文文字文章內文文字，文章內文文字文章內文文字文章，內文文字，文章內文文字文章內文文字文章內文文字文章內文文字
 excerpt_en: ''
-image: ''
+image: /assets/uploads/rock.png
 body_en: ''
 published: true
 ---
