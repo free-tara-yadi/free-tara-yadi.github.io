@@ -45,6 +45,20 @@ html {
     font-family: SweiSpringCJKsc;
 }
 
+
+/* 防止 iOS 彈性滾動 */
+body {
+    overscroll-behavior-y: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 確保 pin 元素正確顯示 */
+.intro, .location, .about-tara {
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
 body[page="article"], body[page="news"] {
     background-color: var(--white);
     color: var(--black);
