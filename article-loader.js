@@ -245,9 +245,12 @@ class ArticleLoader {
                     const { frontmatter, body } = this.parseFrontmatter(content);
 
                     if (frontmatter.published !== false) {
+                        // 使用文件名作为 slug（因为现在文件名就是基于 slug 的）
+                        const fileSlug = file.replace('.md', '');
                         this.news.push({
                             ...frontmatter,
-                            body: this.markdownToHtml(body)
+                            body: this.markdownToHtml(body),
+                            slug: frontmatter.slug || fileSlug
                         });
                     }
                 } catch (error) {

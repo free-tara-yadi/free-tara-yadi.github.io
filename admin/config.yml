@@ -15,6 +15,8 @@ collections:
     create: true
     slug: "{{slug}}"
     path: "{{slug}}"
+    identifier_field: slug
+    summary: "{{title}}"
     format: "frontmatter"
     fields:
       - { label: "标题", name: "title", widget: "string" }
@@ -35,8 +37,11 @@ collections:
     folder: "content/messages"
     create: true
     slug: "{{slug}}"
+    identifier_field: slug
+    summary: "{{title}}"
     fields:
       - { label: "标题", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", required: true, hint: "URL路径，例如：my-message" }
       - { label: "标题 (英文)", name: "title_en", widget: "string", required: false }
       - { label: "日期", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
       - { label: "正文", name: "body", widget: "markdown" }
@@ -49,8 +54,11 @@ collections:
     folder: "content/faq"
     create: true
     slug: "{{slug}}"
+    identifier_field: slug
+    summary: "{{title}}"
     fields:
       - { label: "标题", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string", required: true, hint: "URL路径，例如：my-faq-question" }
       - { label: "标题 (英文)", name: "title_en", widget: "string", required: false }
       - { label: "答案", name: "answer", widget: "text" }
       - { label: "答案 (英文)", name: "answer_en", widget: "text", required: false }
