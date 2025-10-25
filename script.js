@@ -92,7 +92,8 @@ window.addEventListener('beforeunload', () => {
 
 // Intro 動畫函數
 function introAnimation() {
-
+    // 快取計算值和 DOM 元素
+    const insetValue = gsap.utils.mapRange(1024, 1440, 42, 38, window.innerWidth);
     let stickyHeight = window.innerHeight * 5;
 
     let tl = gsap.timeline({
@@ -118,11 +119,9 @@ function introAnimation() {
         rotate: 20,
     }, 0);
 
+    // 修正: 使用預先計算的值
     tl.to(".kv-img-wrap", {
-        clipPath: () => {
-            const value = gsap.utils.mapRange(1024, 1440, 42, 38, window.innerWidth);
-            return `inset(${value}vw ${value}vw ${value}vw ${value}vw)`;
-        },
+        clipPath: `inset(${insetValue}vw ${insetValue}vw ${insetValue}vw ${insetValue}vw)`,
         ease: "none"
     }, 0);
 
@@ -146,7 +145,6 @@ function introAnimation() {
         ease: "none",
         duration: 0.5
     });
-    
 
     tl.from(".condition > *", {
         opacity: 0,
@@ -161,10 +159,8 @@ function introAnimation() {
         stagger: 0.3,
     });
 
-    // Resize 處理
     const handleResize = () => {
         stickyHeight = window.innerHeight * 5;
-        
         if (tl.scrollTrigger) {
             tl.scrollTrigger.refresh();
         }
@@ -172,7 +168,6 @@ function introAnimation() {
     
     window.addEventListener('resize', handleResize);
 
-    // 返回清理函數
     return () => {
         if (tl.scrollTrigger) {
             tl.scrollTrigger.kill();
