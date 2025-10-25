@@ -3,8 +3,8 @@ class ScriptManager {
         this.cleanupFunctions = [];
         this.currentScreenSize = window.innerWidth < 1024 ? 'mobile' : 'desktop';
         // 初始化時禁用滾動（同時設置 html 和 body）
-        document.documentElement.style.overflow = 'clip';
-        document.body.style.overflow = 'clip';
+        document.documentElement.style.overflowY = 'clip';
+        document.body.style.overflowY = 'clip';
     }
 
     init() {
@@ -44,12 +44,12 @@ class ScriptManager {
                 
                 // 確保在移動設備上恢復滾動
                 if (newScreenSize === 'mobile') {
-                    document.documentElement.style.overflow = 'clip';
-                    document.body.style.overflow = 'clip';
+                    document.documentElement.style.overflowY = 'auto';
+                    document.body.style.overflowY = 'auto';
                 } else {
                     // 在桌面設備上保持 hidden（因為有 Lenis）
-                    document.documentElement.style.overflow = 'clip';
-                    document.body.style.overflow = 'clip';
+                    document.documentElement.style.overflowY = 'clip';
+                    document.body.style.overflowY = 'clip';
                 }
             }
         };
