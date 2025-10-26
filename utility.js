@@ -63,24 +63,6 @@ window.animationManager = new AnimationManager();
 function lenisInitialize() {
     gsap.registerPlugin(ScrollTrigger);
     
-    // 檢查屏幕寬度，小於 1024px 時禁用 Lenis
-    if (window.innerWidth < 1024) {
-        // 在移動設備上，恢復滾動功能
-        document.documentElement.style.overflowY = 'auto';
-        document.body.style.overflowY = 'auto';
-        
-        // 設置基本的滾動恢復
-        window.history.scrollRestoration = "manual";
-        
-        // 強制滾動到頂部
-        window.scrollTo(0, 0);
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-        
-        // 返回空的清理函數
-        return () => {};
-    }
-    
     // Create Lenis instance with scrollTop reset
     const lenis = new Lenis({
         // Add any existing options you have
