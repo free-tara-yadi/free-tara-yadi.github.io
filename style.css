@@ -40,6 +40,14 @@
     margin-bottom: 2rem;
 }
 
+.kv-items-wrap {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .lastest-news {
     width: 30rem;
     aspect-ratio: 3/2;
@@ -102,13 +110,14 @@
 }
 
 .kv-img {
-    position: relative;
+    position: sticky;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: auto;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0rem 1.2rem;
     overflow: clip;
 
 }
@@ -199,9 +208,11 @@
 }
 
 .intro {
-    height: 100vh;
+    height: 500vh;
 
 }
+
+
 
 .condition {
     position: absolute;
@@ -325,7 +336,7 @@
 
 
 .location {
-    height: 120vh;
+    height: 300vh;
     
     text-align: center;
     padding: var(--site-margin);
@@ -336,7 +347,8 @@
 }
 
 .location-inner {
-    position: relative;
+    position: sticky;
+    top: 0;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -427,9 +439,7 @@
 }
 
 .about-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
+
 }
 
 .about-slide-img {
@@ -463,7 +473,7 @@
     width: 100vw;
     color: #DEDFC6;
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
 
 }
@@ -819,6 +829,10 @@ section.info {
         font-size: var(--fs-base);
     }
 
+    .condition-content {
+        padding: 0;
+    }
+
     .condition-title {
         padding: 2rem;
 
@@ -828,6 +842,18 @@ section.info {
         flex-direction: column;
         gap: 2rem;
         padding: 2rem;
+    }
+
+    .condition-card .info {
+        width: 100%;
+    }
+    
+    .map-wrap {
+        width: 90vw;
+    }
+
+    .location p {
+        padding: 6rem 0;
     }
 
     .card-wrap {

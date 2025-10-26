@@ -2,9 +2,22 @@ class ScriptManager {
     constructor() {
         this.cleanupFunctions = [];
         this.currentScreenSize = window.innerWidth < 1024 ? 'mobile' : 'desktop';
-        // 初始化時禁用滾動（同時設置 html 和 body）
-        document.documentElement.style.overflowY = 'clip';
-        document.body.style.overflowY = 'clip';
+        // 根據屏幕尺寸設置滾動行為
+        if (this.currentScreenSize === 'mobile') {
+            // 移動設備允許滾動並添加 data-lenis-prevent 屬性
+            document.documentElement.style.overflowY = '';
+            document.body.style.overflowY = '';
+            document.querySelectorAll('.mobile-sticky').forEach(element => {
+                element.setAttribute('data-lenis-prevent', '');
+            });
+        } else {
+            // 桌面設備禁用滾動（使用 Lenis）
+            document.documentElement.style.overflowY = 'clip';
+            document.body.style.overflowY = 'clip';
+            document.querySelectorAll('.mobile-sticky').forEach(element => {
+                element.removeAttribute('data-lenis-prevent');
+            });
+        }
     }
 
     init() {
@@ -33,24 +46,49 @@ class ScriptManager {
     }
 
     setupResizeHandler() {
+        let resizeTimer = null;
+        
         this.resizeHandler = () => {
             const newScreenSize = window.innerWidth < 1024 ? 'mobile' : 'desktop';
             
             // 如果屏幕尺寸發生變化（桌面 ↔ 移動），重新初始化
             if (newScreenSize !== this.currentScreenSize) {
-                this.currentScreenSize = newScreenSize;
-                this.cleanup();
-                this.initializeAnimations();
-                
-                // 確保在移動設備上恢復滾動
+                // 立即設置正確的 overflow 狀態，避免閃爍
                 if (newScreenSize === 'mobile') {
-                    document.documentElement.style.overflowY = 'auto';
-                    document.body.style.overflowY = 'auto';
+                    document.documentElement.style.overflowY = '';
+                    document.body.style.overflowY = '';
                 } else {
-                    // 在桌面設備上保持 hidden（因為有 Lenis）
                     document.documentElement.style.overflowY = 'clip';
                     document.body.style.overflowY = 'clip';
                 }
+                
+                this.currentScreenSize = newScreenSize;
+                
+                // 使用 debounce 確保在 resize 結束後才重新初始化
+                if (resizeTimer) {
+                    clearTimeout(resizeTimer);
+                }
+                
+                resizeTimer = setTimeout(() => {
+                    this.cleanup();
+                    this.initializeAnimations();
+                    
+                    // 確保在移動設備上恢復滾動並添加 data-lenis-prevent
+                    if (newScreenSize === 'mobile') {
+                        document.documentElement.style.overflowY = '';
+                        document.body.style.overflowY = '';
+                        document.querySelectorAll('.mobile-sticky').forEach(element => {
+                            element.setAttribute('data-lenis-prevent', '');
+                        });
+                    } else {
+                        // 在桌面設備上保持 hidden（因為有 Lenis）
+                        document.documentElement.style.overflowY = 'clip';
+                        document.body.style.overflowY = 'clip';
+                        document.querySelectorAll('.mobile-sticky').forEach(element => {
+                            element.removeAttribute('data-lenis-prevent');
+                        });
+                    }
+                }, 100);
             }
         };
         
@@ -71,16 +109,38 @@ class ScriptManager {
 
 // 初始化 ScriptManager
 document.addEventListener('DOMContentLoaded', () => {
-    // 等待所有樣式和資源載入完成
-    window.addEventListener('load', () => {
-        // 額外等待一幀確保所有渲染完成
-        requestAnimationFrame(() => {
+    const initializeScriptManager = () => {
+        // 检查 window.load 是否已经完成
+        if (document.readyState === 'complete') {
+            // 页面已经加载完成，直接执行
             requestAnimationFrame(() => {
-                window.scriptManager = new ScriptManager();
-                window.scriptManager.init();
+                requestAnimationFrame(() => {
+                    window.scriptManager = new ScriptManager();
+                    window.scriptManager.init();
+                });
             });
-        });
-    });
+        } else {
+            // 等待所有樣式和資源載入完成
+            window.addEventListener('load', () => {
+                // 額外等待一幀確保所有渲染完成
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        window.scriptManager = new ScriptManager();
+                        window.scriptManager.init();
+                    });
+                });
+            }, { once: true });
+        }
+    };
+    
+    // 检查 CMSLoader 是否已经完成初始化
+    if (window.cmsLoader && window.cmsLoader.ready) {
+        // CMSLoader 已经加载完成，直接执行初始化
+        initializeScriptManager();
+    } else {
+        // 等待 cms-loader-ready 事件
+        window.addEventListener('cms-loader-ready', initializeScriptManager, { once: true });
+    }
 });
 
 // 頁面卸載時清理
@@ -100,9 +160,8 @@ function introAnimation() {
         scrollTrigger: {
             trigger: ".intro",
             start: "top top",
-            end: () => `+=${stickyHeight}px`,
+            end: "bottom bottom",
             scrub: true,
-            pin: true,
             refreshPriority: 2,
             invalidateOnRefresh: true
         }
@@ -111,7 +170,9 @@ function introAnimation() {
     tl.set(".kv-img-wrap", { clipPath: "inset(0% 0% 0% 0%)" });
     tl.set(".condition", { clipPath: "polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%)" });
     tl.set(".intro-reveal", { opacity: 0 });
-
+    tl.set(".slide-up", {
+        y: "50vh"
+    });
     tl.to(".fade-out", {
         xPercent: 100,
         duration: 0.3,
@@ -146,15 +207,10 @@ function introAnimation() {
         duration: 0.5
     });
 
-    tl.from(".condition > *", {
-        opacity: 0,
-        ease: "none",
-        duration: 0.5,
-        delay: -0.5,
-    });
 
-    tl.from(".slide-up", {
-        y: "50vh",
+
+    tl.to(".slide-up", {
+        y: "0vh",
         ease: "none",
         stagger: 0.3,
     });
@@ -186,7 +242,6 @@ function mapAnimation() {
             start: "top top",
             end: "bottom center",
             scrub: true,
-            pin: true,
             refreshPriority: 1,
             invalidateOnRefresh: true
         }
@@ -198,6 +253,7 @@ function mapAnimation() {
     maptl.to(".map-wrap", {
         clipPath: "polygon(30% 15%, 70% 15%, 70% 85%, 30% 85%)",
         ease: "none",
+        duration: 0.5,
     });
 
     maptl.to(".map-wrap img", {

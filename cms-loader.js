@@ -6,6 +6,7 @@ class CMSLoader {
         this.about = [];
         this.faq = [];
         this.home = null;
+        this.ready = false; // 标记是否已加载完成
     }
 
 
@@ -609,11 +610,17 @@ class CMSLoader {
         
         // 初始化新闻标签切换
         this.initNewsTabs();
+        
+        // 标记为已完成
+        this.ready = true;
     }
 }
 
 // 全局初始化
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
     window.cmsLoader = new CMSLoader();
-    window.cmsLoader.init();
+    await window.cmsLoader.init();
+    
+    // 标记 CMSLoader 已加载完成，触发自定义事件
+    window.dispatchEvent(new CustomEvent('cms-loader-ready'));
 });
