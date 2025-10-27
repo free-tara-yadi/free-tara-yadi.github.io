@@ -1,15 +1,11 @@
 class ScriptManager {
     constructor() {
         this.cleanupFunctions = [];
-        this.currentScreenSize = window.innerWidth < 1024 ? 'mobile' : 'desktop';
-        // 初始化時禁用滾動（同時設置 html 和 body）
-        document.documentElement.style.overflow = 'clip';
-        document.body.style.overflow = 'clip';
+
     }
 
     init() {
         this.initializeAnimations();
-        this.setupResizeHandler();
         window.scrollTo(0, 0);
     }
 
@@ -29,40 +25,10 @@ class ScriptManager {
         });
     }
 
-    setupResizeHandler() {
-        this.resizeHandler = () => {
-            const newScreenSize = window.innerWidth < 1024 ? 'mobile' : 'desktop';
-            
-            // 如果屏幕尺寸發生變化（桌面 ↔ 移動），重新初始化
-            if (newScreenSize !== this.currentScreenSize) {
-                this.currentScreenSize = newScreenSize;
-                this.cleanup();
-                this.initializeAnimations();
-                
-                // 確保在移動設備上恢復滾動
-                if (newScreenSize === 'mobile') {
-                    document.documentElement.style.overflowY = 'auto';
-                    document.body.style.overflowY = 'auto';
-                } else {
-                    // 在桌面設備上保持 hidden（因為有 Lenis）
-                    document.documentElement.style.overflow = 'clip';
-                    document.body.style.overflow = 'clip';
-                }
-            }
-        };
-        
-        window.addEventListener('resize', this.resizeHandler);
-    }
-
     cleanup() {
         this.cleanupFunctions.forEach(fn => fn());
         this.cleanupFunctions = [];
         window.animationManager.destroy();
-        
-        if (this.resizeHandler) {
-            window.removeEventListener('resize', this.resizeHandler);
-            this.resizeHandler = null;
-        }
     }
 }
 
@@ -91,12 +57,6 @@ window.addEventListener('beforeunload', () => {
 
 // Header 滾動隱藏/顯示功能
 function headerScrollHandler() {
-    // 檢查屏幕寬度，小於 1024px 時禁用 header 滾動處理
-    if (window.innerWidth < 1024) {
-        // 在移動設備上，返回空的清理函數
-        return () => {};
-    }
-    
     const header = document.querySelector('.header-nav');
     let lastScrollY = window.scrollY;
     let ticking = false;

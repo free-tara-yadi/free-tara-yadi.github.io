@@ -1,7 +1,7 @@
 class ScriptManager {
     constructor() {
         this.cleanupFunctions = [];
-        this.currentScreenSize = window.innerWidth < 1024 ? 'mobile' : 'desktop';
+        this.currentScreenSize = window.innerWidth < 768 ? 'mobile' : 'desktop';
         // 根據屏幕尺寸設置滾動行為
         if (this.currentScreenSize === 'mobile') {
             // 移動設備允許滾動並添加 data-lenis-prevent 屬性
@@ -49,7 +49,7 @@ class ScriptManager {
         let resizeTimer = null;
         
         this.resizeHandler = () => {
-            const newScreenSize = window.innerWidth < 1024 ? 'mobile' : 'desktop';
+            const newScreenSize = window.innerWidth < 768 ? 'mobile' : 'desktop';
             
             // 如果屏幕尺寸發生變化（桌面 ↔ 移動），重新初始化
             if (newScreenSize !== this.currentScreenSize) {
@@ -152,181 +152,210 @@ window.addEventListener('beforeunload', () => {
 
 // Intro 動畫函數
 function introAnimation() {
-    // 快取計算值和 DOM 元素
-    const insetValue = gsap.utils.mapRange(1024, 1440, 42, 38, window.innerWidth);
-    let stickyHeight = window.innerHeight * 5;
+    // 創建 GSAP Context
+    const ctx = gsap.context(() => {
 
-    let tl = gsap.timeline({
-        scrollTrigger: {
-            trigger: ".intro",
-            start: "top top",
-            end: "bottom bottom",
-            scrub: true,
-            refreshPriority: 2,
-            invalidateOnRefresh: true
-        }
-    });
-
-    tl.set(".kv-img-wrap", { clipPath: "inset(0% 0% 0% 0%)" });
-    tl.set(".condition", { clipPath: "polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%)" });
-    tl.set(".intro-reveal", { opacity: 0 });
-    tl.set(".slide-up", {
-        y: "50vh"
-    });
-    tl.to(".fade-out", {
-        xPercent: 100,
-        duration: 0.3,
-        stagger: { amount: 0.06, from: "end" },
-        rotate: 20,
-    }, 0);
-
-    // 修正: 使用預先計算的值
-    tl.to(".kv-img-wrap", {
-        clipPath: `inset(${insetValue}vw ${insetValue}vw ${insetValue}vw ${insetValue}vw)`,
-        ease: "none"
-    }, 0);
-
-    tl.to(".kv-img-wrap img", {
-        scale: 0.8,
-        ease: "none"
-    }, 0);
-
-    tl.to(".intro-reveal", {
-        opacity: 1,
-        ease: "power2.inOut",
-        stagger: 0.2,
-    }, 0.3);
-
-    tl.fromTo(".condition", {
-        clipPath: "polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%)",
-        y: "100vh",
-    },  {
-        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-        y: "0",
-        ease: "none",
-        duration: 0.5
-    });
-
-
-
-    tl.to(".slide-up", {
-        y: "0vh",
-        ease: "none",
-        stagger: 0.3,
-    });
-
-    const handleResize = () => {
-        stickyHeight = window.innerHeight * 5;
-        if (tl.scrollTrigger) {
-            tl.scrollTrigger.refresh();
-        }
-    };
+        const mm = gsap.matchMedia();
+        
+        mm.add("(min-width: 769px)", () => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".intro",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: true,
+                    refreshPriority: 2,
+                    invalidateOnRefresh: true
+                }
+            });
     
-    window.addEventListener('resize', handleResize);
+            tl.set(".kv-img-wrap", { clipPath: "inset(0% 0% 0% 0%)" });
+            tl.set(".condition", { clipPath: "polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%)" });
+            tl.set(".intro-reveal", { opacity: 0 });
+            tl.set(".slide-up", {
+                y: "50vh"
+            });
+            tl.to(".fade-out", {
+                xPercent: 100,
+                duration: 0.3,
+                stagger: { amount: 0.06, from: "end" },
+                rotate: 20,
+            }, 0);
+    
+            // 修正: 使用預先計算的值
+            tl.to(".kv-img-wrap", {
+                clipPath: `inset(38vw 38vw 38vw 38vw)`,
+                ease: "none"
+            }, 0);
+    
+            tl.to(".kv-img-wrap img", {
+                scale: 0.8,
+                ease: "none"
+            }, 0);
+    
+            tl.to(".intro-reveal", {
+                opacity: 1,
+                ease: "power2.inOut",
+                stagger: 0.2,
+            }, 0.3);
+    
+            tl.fromTo(".condition", {
+                clipPath: "polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%)",
+                y: "100vh",
+            },  {
+                clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+                y: "0",
+                ease: "none",
+                duration: 0.5
+            });
+    
+            tl.to(".slide-up", {
+                y: "0vh",
+                ease: "none",
+                stagger: 0.3,
+            });
 
-    return () => {
-        if (tl.scrollTrigger) {
-            tl.scrollTrigger.kill();
-        }
-        tl.kill();
-        window.removeEventListener('resize', handleResize);
-    };
+        });
+
+        mm.add("(max-width: 768px)", () => {
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".intro",
+                    start: "top top",
+                    end: "bottom bottom",
+                    scrub: true,
+                    refreshPriority: 2,
+                    invalidateOnRefresh: true
+                }
+            });
+    
+            tl.set(".intro-reveal", { opacity: 0 });
+            tl.to(".fade-out", {
+                xPercent: 100,
+                duration: 0.3,
+                stagger: { amount: 0.06, from: "end" },
+                rotate: 20,
+            }, 0);
+    
+            // 修正: 使用預先計算的值
+            tl.to(".kv-img-wrap", {
+                yPercent: 10,
+                scale: 0.4,
+                ease: "none"
+            }, 0);
+    
+            tl.to(".kv-img-wrap img", {
+                scale: 2,
+                ease: "none"
+            }, 0);
+    
+            tl.to(".intro-reveal", {
+                opacity: 1,
+                ease: "power2.inOut",
+                stagger: 0.2,
+            }, 0.3);
+
+        });
+
+        
+    });
+
+    // 返回清理函數
+    return () => ctx.revert();
 }
 
 
 // Map 動畫函數
 function mapAnimation() {
-    let maptl = gsap.timeline({
-        scrollTrigger: {
-            trigger: ".location",
-            start: "top top",
-            end: "bottom center",
-            scrub: true,
-            refreshPriority: 1,
-            invalidateOnRefresh: true
-        }
+    // 創建 GSAP Context
+    const ctx = gsap.context(() => {
+        // 使用 matchMedia 實現響應式動畫
+        const mm = gsap.matchMedia();
+
+        // 桌面版：包含完整動畫（包括 clipPath）
+        mm.add("(min-width: 769px)", () => {
+            const maptl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".location",
+                    start: "top top",
+                    end: "bottom center",
+                    scrub: true,
+                    refreshPriority: 1,
+                    invalidateOnRefresh: true
+                }
+            });
+
+            maptl.set(".map-wrap", { clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" });
+            maptl.set(".map-reveal", { opacity: 0 });
+
+            maptl.to(".map-wrap", {
+                clipPath: "polygon(30% 15%, 70% 15%, 70% 85%, 30% 85%)",
+                ease: "none",
+                duration: 0.5,
+            });
+
+            maptl.to(".map-wrap img", {
+                scale: 1.2,
+                ease: "none",
+            },0);
+
+            maptl.to(".map-reveal", {
+                opacity: 1,
+                ease: "none",
+                stagger: { amount: 0.5, from: "end" },
+            },0);
+        });
+
+        // 手機版：移除 clipPath 動畫
+        mm.add("(max-width: 768px)", () => {
+            const maptl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".location",
+                    start: "top top",
+                    end: "bottom center",
+                    scrub: true,
+                    refreshPriority: 1,
+                    invalidateOnRefresh: true
+                }
+            });
+
+            maptl.to(".map-wrap img", {
+                scale: 1.5,
+                ease: "none",
+            });
+
+
+        });
     });
-
-    maptl.set(".map-wrap", { clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" });
-    maptl.set(".map-reveal", { opacity: 0 });
-
-    maptl.to(".map-wrap", {
-        clipPath: "polygon(30% 15%, 70% 15%, 70% 85%, 30% 85%)",
-        ease: "none",
-        duration: 0.5,
-    });
-
-    maptl.to(".map-wrap img", {
-        scale: 1.2,
-        ease: "none",
-    },0);
-
-    maptl.to(".map-reveal", {
-        opacity: 1,
-        ease: "none",
-        stagger: { amount: 0.5, from: "end" },
-    },0);
-
-    // Resize 處理
-    const handleResize = () => {
-        if (maptl.scrollTrigger) {
-            maptl.scrollTrigger.refresh();
-        }
-    };
-    
-    window.addEventListener('resize', handleResize);
 
     // 返回清理函數
-    return () => {
-        if (maptl.scrollTrigger) {
-            maptl.scrollTrigger.kill();
-        }
-        maptl.kill();
-        window.removeEventListener('resize', handleResize);
-    };
+    return () => ctx.revert();
 }
 
 
 // About 動畫函數
 function aboutAnimation() {
-    let stickyHeight2 = window.innerHeight * 5;
-    
-    let tl2 = gsap.timeline({
-        scrollTrigger: {
-            trigger: ".about-tara",
-            start: "top top",
-            end: "bottom bottom",
-            scrub: true,
-            invalidateOnRefresh: true
-        }
+    // 創建 GSAP Context
+    const ctx = gsap.context(() => {
+        const tl2 = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".about-tara",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: true,
+                invalidateOnRefresh: true
+            }
+        });
+
+        tl2.to(".about-slide-img", {
+            opacity: 1,
+            ease: "none",
+            stagger: 1,
+        }, 0.2);
     });
 
-
-    tl2.to(".about-slide-img", {
-        opacity: 1,
-        ease: "none",
-        stagger: 1,
-    }, 0.2);
-
-    // Resize 處理
-    const handleResize = () => {
-        stickyHeight2 = window.innerHeight * 5;
-        
-        if (tl2.scrollTrigger) {
-            tl2.scrollTrigger.refresh();
-        }
-    };
-    
-    window.addEventListener('resize', handleResize);
-
     // 返回清理函數
-    return () => {
-        if (tl2.scrollTrigger) {
-            tl2.scrollTrigger.kill();
-        }
-        tl2.kill();
-        window.removeEventListener('resize', handleResize);
-    };
+    return () => ctx.revert();
 }
 
 
@@ -335,7 +364,7 @@ function aboutAnimation() {
 // Header 滾動隱藏/顯示功能
 function headerScrollHandler() {
     // 檢查屏幕寬度，小於 1024px 時禁用 header 滾動處理
-    if (window.innerWidth < 1024) {
+    if (window.innerWidth < 768) {
         // 在移動設備上，返回空的清理函數
         return () => {};
     }

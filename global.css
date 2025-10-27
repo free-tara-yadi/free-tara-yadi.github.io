@@ -1,4 +1,10 @@
 @font-face {
+    font-family: Marcellus;
+    src: url(./assets/Marcellus-Regular.ttf) format("truetype");
+    font-weight: 400;
+}
+
+@font-face {
     font-family: SweiSpringCJKsc;
     src: url(https://cdn.jsdelivr.net/gh/max32002/swei-spring@1.068/WebFont/CJK%20SC/SweiSpringCJKsc-Regular.woff2) format("woff2")
     , url(https://cdn.jsdelivr.net/gh/max32002/swei-spring@1.068/WebFont/CJK%20SC/SweiSpringCJKsc-Regular.woff) format("woff");
@@ -20,27 +26,12 @@
     font-weight: 300;
 }
 
-@font-face {
-    font-family: "Switzer", sans-serif;
-    src: url('./assets/Switzer-Variable.woff2') format('woff2'),
-         url('./assets/Switzer-Variable.woff') format('woff');
-    font-weight: 100 900;
-    font-display: swap;
-    font-style: normal;
-}
-
-
-@font-face {
-    font-family: "Marcellus", serif;
-    src: url('./assets/Marcellus-Regular.ttf') format('ttf');
-    font-weight: 400;
-    font-style: normal;
-}
 
 body,
 html {
     font-size: 10px;
     width: 100%;
+    overflow-x: clip;
     height: fit-content;
     margin: 0;
     padding: 0;
@@ -50,21 +41,6 @@ html {
     letter-spacing: 0%;
     text-transform: uppercase;
     font-family: SweiSpringCJKsc;
-    overflow-x: clip;
-    overscroll-behavior-x: none;
-}
-
-
-/* 防止 iOS 彈性滾動 */
-body {
-    -webkit-overflow-scrolling: touch;
-}
-
-/* 確保 pin 元素正確顯示 */
-.intro, .location, .about-tara {
-    will-change: transform;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
 }
 
 body[page="article"], body[page="news"] {
@@ -375,6 +351,7 @@ footer {
     font-family: "Marcellus", serif;
     font-size: 9vw;
     opacity: 0.2;
+    text-align: center;
   }
 
 
@@ -388,6 +365,7 @@ footer {
 
 .news-card {
     width: 100%;
+    min-width: 100%;
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
@@ -454,18 +432,19 @@ footer {
 }
 
 .tab-link {
-    font-size: var(--fs-base);
-    padding: 1rem 2rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--gray-300);
     border-radius: 2rem;
     text-decoration: none;
     color: var(--black);
+    font-weight: 500;
     transition: all 0.3s ease;
 }
 
 .tab-link:hover,
 .tab-link.active {
     background-color: var(--black);
-    color: #DEDFC6;
+    color: white;
 }
 
 .filter-section {
@@ -479,16 +458,19 @@ footer {
 .filter-group {
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 0.5rem;
 }
 
 .filter-group label {
     font-size: var(--fs-sm);
     font-weight: 500;
+    color: var(--gray-600);
 }
 
 .filter-select {
     padding: 0.75rem 1rem;
+    border: 1px solid var(--gray-300);
     border-radius: 0.5rem;
     background-color: white;
     font-size: var(--fs-sm);
@@ -597,6 +579,10 @@ body[page="news"] .news-card h3 {
 /* 响应式设计 */
 @media (max-width: 768px) {
 
+    .header-nav {
+        transform: translateX(-50%) translateY(0);
+    }
+
     
     .news-item {
         flex-direction: column;
@@ -616,7 +602,6 @@ body[page="news"] .news-card h3 {
     .news-tabs {
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
     }
     
     .pagination {
@@ -692,10 +677,6 @@ body[page="article"] .container {
     line-height: 2;
     font-weight: 300;
     margin-bottom: 2rem;
-}
-
-.article-body img {
-    width: var(--about-width);
 }
 
 .article-tags {
