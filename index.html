@@ -86,7 +86,7 @@
                     <div class="info">                    
                       <p>Tara 在海外就读并参与人权倡议后失踪，据报导被国安人员带走，至今已被羁押超过85天</p>
                       <div class="data">
-                        <p class="data-number days" id="days-count"></p>
+                        <p class="data-number days-count" id="days-count"></p>
                         <p>天</p>
                       </div>
                     </div>
@@ -154,7 +154,7 @@
                 <div class="info">                    
                   <p>Tara 在海外就读并参与人权倡议后失踪，据报导被国安人员带走，至今已被羁押超过85天</p>
                   <div class="data">
-                    <p class="data-number days" id="days-count"></p>
+                    <p class="data-number days-count" id="days-count"></p>
                     <p>天</p>
                   </div>
                 </div>
@@ -324,11 +324,11 @@
         const diffTime = today - startDate;
         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
         
-        const daysCountEl = document.getElementById('days-count');
-        const detentionDaysEl = document.getElementById('detention-days');
-        
-        if (daysCountEl) daysCountEl.textContent = diffDays;
-        if (detentionDaysEl) detentionDaysEl.textContent = diffDays;
+        // 更新所有 .days-count 元素
+        const daysCountElements = document.querySelectorAll('.days-count');
+        daysCountElements.forEach(function(el) {
+          el.textContent = diffDays;
+        });
       });
     </script>
 </html>
