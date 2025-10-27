@@ -1,23 +1,6 @@
 class ScriptManager {
     constructor() {
         this.cleanupFunctions = [];
-        this.currentScreenSize = window.innerWidth < 768 ? 'mobile' : 'desktop';
-        // 根據屏幕尺寸設置滾動行為
-        if (this.currentScreenSize === 'mobile') {
-            // 移動設備允許滾動並添加 data-lenis-prevent 屬性
-            document.documentElement.style.overflowY = '';
-            document.body.style.overflowY = '';
-            document.querySelectorAll('.mobile-sticky').forEach(element => {
-                element.setAttribute('data-lenis-prevent', '');
-            });
-        } else {
-            // 桌面設備禁用滾動（使用 Lenis）
-            document.documentElement.style.overflowY = 'clip';
-            document.body.style.overflowY = 'clip';
-            document.querySelectorAll('.mobile-sticky').forEach(element => {
-                element.removeAttribute('data-lenis-prevent');
-            });
-        }
     }
 
     init() {
@@ -28,6 +11,7 @@ class ScriptManager {
 
     initializeAnimations() {
         const cleanups = [
+            preloader(),
             lenisInitialize(),
             parallaxEffect(),
             introAnimation(),
@@ -48,49 +32,11 @@ class ScriptManager {
     setupResizeHandler() {
         let resizeTimer = null;
         
-        this.resizeHandler = () => {
-            const newScreenSize = window.innerWidth < 768 ? 'mobile' : 'desktop';
-            
-            // 如果屏幕尺寸發生變化（桌面 ↔ 移動），重新初始化
-            if (newScreenSize !== this.currentScreenSize) {
-                // 立即設置正確的 overflow 狀態，避免閃爍
-                if (newScreenSize === 'mobile') {
-                    document.documentElement.style.overflowY = '';
-                    document.body.style.overflowY = '';
-                } else {
-                    document.documentElement.style.overflowY = 'clip';
-                    document.body.style.overflowY = 'clip';
-                }
-                
-                this.currentScreenSize = newScreenSize;
-                
-                // 使用 debounce 確保在 resize 結束後才重新初始化
-                if (resizeTimer) {
-                    clearTimeout(resizeTimer);
-                }
-                
-                resizeTimer = setTimeout(() => {
-                    this.cleanup();
-                    this.initializeAnimations();
-                    
-                    // 確保在移動設備上恢復滾動並添加 data-lenis-prevent
-                    if (newScreenSize === 'mobile') {
-                        document.documentElement.style.overflowY = '';
-                        document.body.style.overflowY = '';
-                        document.querySelectorAll('.mobile-sticky').forEach(element => {
-                            element.setAttribute('data-lenis-prevent', '');
-                        });
-                    } else {
-                        // 在桌面設備上保持 hidden（因為有 Lenis）
-                        document.documentElement.style.overflowY = 'clip';
-                        document.body.style.overflowY = 'clip';
-                        document.querySelectorAll('.mobile-sticky').forEach(element => {
-                            element.removeAttribute('data-lenis-prevent');
-                        });
-                    }
-                }, 100);
-            }
-        };
+        resizeTimer = setTimeout(() => {
+            this.cleanup();
+            this.initializeAnimations();
+
+        }, 100);
         
         window.addEventListener('resize', this.resizeHandler);
     }
@@ -150,6 +96,22 @@ window.addEventListener('beforeunload', () => {
     }
 });
 
+
+
+function preloader() {
+
+    const ctx = gsap.context(() => {
+        const tl = gsap.timeline();
+        tl.to("body", {
+            autoAlpha: 1,
+            ease: "power2.out",
+        });
+
+    });
+    return () => ctx.revert();
+
+}
+
 // Intro 動畫函數
 function introAnimation() {
     // 創建 GSAP Context
@@ -157,7 +119,7 @@ function introAnimation() {
 
         const mm = gsap.matchMedia();
         
-        mm.add("(min-width: 769px)", () => {
+        mm.add("(min-width: 1025px)", () => {
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".intro",
@@ -217,7 +179,7 @@ function introAnimation() {
 
         });
 
-        mm.add("(max-width: 768px)", () => {
+        mm.add("(max-width: 1024px)", () => {
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".intro",
@@ -230,16 +192,10 @@ function introAnimation() {
             });
     
             tl.set(".intro-reveal", { opacity: 0 });
-            tl.to(".fade-out", {
-                xPercent: 100,
-                duration: 0.3,
-                stagger: { amount: 0.06, from: "end" },
-                rotate: 20,
-            }, 0);
     
             // 修正: 使用預先計算的值
             tl.to(".kv-img-wrap", {
-                yPercent: 10,
+                yPercent: 5,
                 scale: 0.4,
                 ease: "none"
             }, 0);
@@ -252,8 +208,8 @@ function introAnimation() {
             tl.to(".intro-reveal", {
                 opacity: 1,
                 ease: "power2.inOut",
-                stagger: 0.2,
-            }, 0.3);
+
+            });
 
         });
 
@@ -273,7 +229,7 @@ function mapAnimation() {
         const mm = gsap.matchMedia();
 
         // 桌面版：包含完整動畫（包括 clipPath）
-        mm.add("(min-width: 769px)", () => {
+        mm.add("(min-width: 1025px)", () => {
             const maptl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".location",
@@ -307,7 +263,7 @@ function mapAnimation() {
         });
 
         // 手機版：移除 clipPath 動畫
-        mm.add("(max-width: 768px)", () => {
+        mm.add("(max-width: 1024px)", () => {
             const maptl = gsap.timeline({
                 scrollTrigger: {
                     trigger: ".location",

@@ -48,6 +48,8 @@ body[page="article"], body[page="news"] {
     color: var(--black);
 }
 
+
+
 .font-en {
     font-family: "Marcellus", serif;
     font-weight: 400;
@@ -230,6 +232,7 @@ button {
     font-family: "Noto Sans SC", sans-serif;
     padding: 0.8rem 2.4rem;
     border-radius: 10cqh;
+    text-align: center;
 }
 
 button.lg {
@@ -736,4 +739,21 @@ body[page="article"] .container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
+}
+
+
+
+@media screen and (max-width: 768px) {
+
+    .btn-primary, .btn-primary.light, .btn-secondary {
+        font-size: var(--fs-base);
+        padding: 1.4rem 3.2rem;
+
+    }
+
+    button.lg {
+        padding: 1.4rem 3.2rem;
+    }
+
+
 }
