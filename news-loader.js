@@ -406,6 +406,7 @@ class NewsLoader {
         const tagFilter = document.getElementById('tag-filter');
         const dateFilter = document.getElementById('date-filter');
 
+        
         if (categoryFilter) {
             categoryFilter.addEventListener('change', (e) => {
                 this.filters.category = e.target.value;
