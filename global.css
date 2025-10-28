@@ -449,8 +449,7 @@ footer {
     flex-direction: row;
     justify-content: center;
     transition: all 0.3s ease;
-    border-bottom: 1px solid color-mix(in srgb, var(--brand-dark) 20%, transparent);
-
+    overflow-y: clip;
 }
 
 
@@ -469,7 +468,7 @@ footer {
     border: none;
     cursor: pointer;
     font-family: inherit;
-    transform: translateY(1px);
+    border-bottom: 1px solid color-mix(in srgb, var(--brand-dark) 20%, transparent);
     
 }
 

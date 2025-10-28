@@ -79,14 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     
-    // 检查 CMSLoader 是否已经完成初始化
-    if (window.cmsLoader && window.cmsLoader.ready) {
-        // CMSLoader 已经加载完成，直接执行初始化
-        initializeScriptManager();
-    } else {
-        // 等待 cms-loader-ready 事件
-        window.addEventListener('cms-loader-ready', initializeScriptManager, { once: true });
-    }
+    // 直接执行初始化，不再等待 cms-loader
+    initializeScriptManager();
 });
 
 // 頁面卸載時清理
