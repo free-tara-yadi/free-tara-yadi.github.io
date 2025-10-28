@@ -180,15 +180,11 @@ class ArticleLoader {
             const slug = article.slug || article.title.toLowerCase().replace(/\s+/g, '-');
             return `
                 <article class="news-card">
-                    <a href="article.html?slug=${slug}" class="">
+                    <a href="article.html?slug=${slug}" class="news-img">
                         <img src="${article.image || './assets/rock.png'}" alt="相关文章">
                     </a>
-                    <div class="related-content">
-                        <h3>
-                        ${article.title}</a>
-                        </h3>
-                        <p class="related-date">${article.date}</p>
-                    </div>
+                    <h3>${article.title}</h3>
+                    <p class="news-date">${article.date}</p>
                 </article>
             `;
         }).join('');

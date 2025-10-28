@@ -267,7 +267,7 @@ class NewsLoader {
                     </a>
                     <div class="news-item-meta">
                             <span class="news-category">
-                                <a href="news.html?cat=${article.category}">${this.getCategoryLabel(article.category)}</a>
+                                <button class="filter-link" data-category="${article.category}">${this.getCategoryLabel(article.category)}</button>
                             </span>
                             <span class="news-date">${article.date}</span>
                     </div>
@@ -276,7 +276,7 @@ class NewsLoader {
                     <div class="news-item-tags">
                             ${article.tags ? article.tags.map(tag => `
                                 <span class="tag">
-                                    <a href="news.html?tag=${tag}">${this.getTagLabel(tag)}</a>
+                                    <button class="filter-link" data-tag="${tag}">${this.getTagLabel(tag)}</button>
                                 </span>
 
                             `).join('') : ''}
@@ -284,6 +284,45 @@ class NewsLoader {
                 </div>
             `;
         }).join('');
+
+        // 为分类和标签按钮添加事件监听
+        const filterLinks = newsListing.querySelectorAll('.filter-link');
+        filterLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const category = link.getAttribute('data-category');
+                const tag = link.getAttribute('data-tag');
+                
+                if (category !== null) {
+                    // 设置分类过滤
+                    this.filters.category = category;
+                    this.setActiveTab(category);
+                    
+                    // 更新 URL
+                    const url = new URL(window.location);
+                    if (category) {
+                        url.searchParams.set('cat', category);
+                    } else {
+                        url.searchParams.delete('cat');
+                    }
+                    window.history.pushState({}, '', url);
+                } else if (tag !== null) {
+                    // 设置标签过滤
+                    this.filters.tag = tag;
+                    const tagFilter = document.getElementById('tag-filter');
+                    if (tagFilter) {
+                        tagFilter.value = tag;
+                    }
+                    
+                    // 更新 URL
+                    const url = new URL(window.location);
+                    url.searchParams.set('tag', tag);
+                    window.history.pushState({}, '', url);
+                }
+                
+                this.applyFilters();
+            });
+        });
     }
 
     // 从正文中提取摘要
@@ -342,6 +381,27 @@ class NewsLoader {
 
     // 初始化筛选器事件
     initFilters() {
+        // 初始化 category tabs
+        const tabLinks = document.querySelectorAll('.news-tabs .tab-link');
+        tabLinks.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                const category = tab.getAttribute('data-category') || '';
+                this.filters.category = category;
+                this.setActiveTab(category);
+                this.applyFilters();
+                
+                // 更新 URL 但不跳转页面
+                const url = new URL(window.location);
+                if (category) {
+                    url.searchParams.set('cat', category);
+                } else {
+                    url.searchParams.delete('cat');
+                }
+                window.history.pushState({}, '', url);
+            });
+        });
+
         const categoryFilter = document.getElementById('category-filter');
         const tagFilter = document.getElementById('tag-filter');
         const dateFilter = document.getElementById('date-filter');
@@ -349,6 +409,7 @@ class NewsLoader {
         if (categoryFilter) {
             categoryFilter.addEventListener('change', (e) => {
                 this.filters.category = e.target.value;
+                this.setActiveTab(e.target.value || '');
                 this.applyFilters();
             });
         }
@@ -357,6 +418,15 @@ class NewsLoader {
             tagFilter.addEventListener('change', (e) => {
                 this.filters.tag = e.target.value;
                 this.applyFilters();
+                
+                // 更新 URL
+                const url = new URL(window.location);
+                if (e.target.value) {
+                    url.searchParams.set('tag', e.target.value);
+                } else {
+                    url.searchParams.delete('tag');
+                }
+                window.history.pushState({}, '', url);
             });
         }
 
@@ -364,6 +434,15 @@ class NewsLoader {
             dateFilter.addEventListener('change', (e) => {
                 this.filters.date = e.target.value;
                 this.applyFilters();
+                
+                // 更新 URL
+                const url = new URL(window.location);
+                if (e.target.value) {
+                    url.searchParams.set('date', e.target.value);
+                } else {
+                    url.searchParams.delete('date');
+                }
+                window.history.pushState({}, '', url);
             });
         }
     }
@@ -373,6 +452,7 @@ class NewsLoader {
         const urlParams = new URLSearchParams(window.location.search);
         const tag = urlParams.get('tag');
         const cat = urlParams.get('cat');
+        const date = urlParams.get('date');
 
         if (tag) {
             this.filters.tag = tag;
@@ -390,11 +470,19 @@ class NewsLoader {
             }
         }
 
+        if (date) {
+            this.filters.date = date;
+            const dateFilter = document.getElementById('date-filter');
+            if (dateFilter) {
+                dateFilter.value = date;
+            }
+        }
+
         // 设置active tab
         this.setActiveTab(cat);
 
         // 如果有 URL 参数，应用筛选器
-        if (tag || cat) {
+        if (tag || cat || date) {
             this.applyFilters();
         }
     }
@@ -409,17 +497,9 @@ class NewsLoader {
         });
 
         // 根据category参数设置对应的tab为active
-        if (category) {
-            const activeTab = document.querySelector(`.news-tabs .tab-link[href*="cat=${category}"]`);
-            if (activeTab) {
-                activeTab.classList.add('active');
-            }
-        } else {
-            // 如果没有category参数，设置"全部"tab为active
-            const allTab = document.querySelector('.news-tabs .tab-link[href="news.html"]');
-            if (allTab) {
-                allTab.classList.add('active');
-            }
+        const activeTab = document.querySelector(`.news-tabs .tab-link[data-category="${category || ''}"]`);
+        if (activeTab) {
+            activeTab.classList.add('active');
         }
     }
 

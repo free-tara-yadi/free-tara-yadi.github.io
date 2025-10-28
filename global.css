@@ -40,10 +40,10 @@ html {
     color: var(--txt-white);
     letter-spacing: 0%;
     text-transform: uppercase;
-    font-family: SweiSpringCJKsc;
+
 }
 
-body[page="article"], body[page="news"] {
+body[page="article"], body[page="news"], html:has(body[page="news"]), html:has(body[page="article"]) {
     background-color: var(--white);
     color: var(--black);
 }
@@ -51,7 +51,7 @@ body[page="article"], body[page="news"] {
 
 
 .font-en {
-    font-family: "Marcellus", serif;
+    font-family: "Marcellus", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
@@ -88,8 +88,7 @@ body[page="article"], body[page="news"] {
     --kv-img-size: clamp(100vw, 54.1667rem + 36vw, 160vw);
     --kv-img-height: calc(var(--kv-img-size) * 1.1);
     -webkit-text-stroke-width: var(--text-stroke-width);
-    --border-radius: 0;
-    border-radius: var(--border-radius);
+    --round: 4px;
     --border-width: 0;
     border-width: var(--border-width);
     border-style: solid;
@@ -97,7 +96,10 @@ body[page="article"], body[page="news"] {
     padding: 0;
     box-sizing: border-box;
     --brand: #5B614A;
+    --brand-soft: #bfc0b6;
     --brand-light: #D4D5CD;
+    --accent: #DEDFC6;
+    --brand-dark: #2D3129;
     --orange: #B1582B;
     --txt-white: #D5D5D5;
     --white: #D6D6D6;
@@ -233,6 +235,7 @@ button {
     padding: 0.8rem 2.4rem;
     border-radius: 10cqh;
     text-align: center;
+    transition: all 0.3s ease-out;
 }
 
 button.lg {
@@ -245,6 +248,10 @@ button.lg {
     color: var(--brand);
 }
 
+.btn-primary:hover {
+    background-color: var(--brand-soft);
+}
+
 .btn-primary.light {
     background-color: var(--brand);
     color: var(--brand-light);
@@ -255,6 +262,16 @@ button.lg {
     border: 1px solid color-mix(in srgb, var(--brand-light) 50%, transparent);
     color: var(--brand-light);
 }
+
+.btn-primary.light:hover {
+    background-color: var(--brand-dark);
+}
+
+.btn-secondary:hover {
+    border: 1px solid color-mix(in srgb, var(--brand-light) 100%, transparent);
+
+}
+
 
 a {
     pointer-events: auto;
@@ -338,7 +355,7 @@ footer {
     justify-content: space-between;
     height: 60vh;
     padding:  4rem var(--site-margin) 0 var(--site-margin);
-    color: #DEDFC6;
+    color: var(--accent);
     background-color: #2D3129;
 
   }
@@ -351,7 +368,7 @@ footer {
 
 
   footer h2 {
-    font-family: "Marcellus", serif;
+    font-family: "Marcellus", sans-serif;
     font-size: 9vw;
     opacity: 0.2;
     text-align: center;
@@ -371,7 +388,7 @@ footer {
     min-width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 1.2rem;
 }
 
 
@@ -392,24 +409,38 @@ footer {
 
 .news-card p {
     font-size: var(--fs-sm);
-    font-family: SweiSpringCJKsc;
     font-weight: 300;
+
 }
 
+.news-header {
+    position: fixed;
+    width: 100vw;
+    display: flex;
+    padding: 2rem;
+}
 
+.news-header a {
+    color: var(--black);
+}
+
+.news-header-title {
+    font-family: "Marcellus", sans-serif;
+    font-size: 1.6rem;
+}
 
 /* 新闻列表样式 */
 .news-hero {
     text-align: center;
-    padding: 4rem 0;
-    margin-bottom: 3rem;
+    padding: 8rem 0;
     height: auto;
+    font-family: SweiSpringCJKsc;
 }
 
 .news-title {
-    font-family: "Marcellus", serif;
+    font-family: "Marcellus", sans-serif;
     font-size: 4rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     color: var(--black);
 }
 
@@ -422,32 +453,60 @@ footer {
 .news-content-section {
     max-width: var(--content-width);
     margin: 0 auto;
-    padding: 6rem 0 12rem 0;
+    padding: 0rem 0 12rem 0;
     height: auto;
 }
 
+[page="news"] .news-tabs {
+    margin-bottom: 4rem;
+} 
+
 .news-tabs {
+    
     display: flex;
-    gap: 2rem;
-    margin-bottom: 3rem;
+    flex-direction: row;
     justify-content: center;
-    flex-wrap: wrap;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid color-mix(in srgb, var(--brand-dark) 20%, transparent);
+    overflow-y: visible;
 }
 
+
 .tab-link {
-    padding: 0.75rem 1.5rem;
-    border: 1px solid var(--gray-300);
-    border-radius: 2rem;
+    padding: 1.6rem 2.4rem;
     text-decoration: none;
     color: var(--black);
     font-weight: 500;
     transition: all 0.3s ease;
+    font-size: 1.5rem;
+    text-align: center;
+    white-space: nowrap;
+    opacity: 0.5;
+    border-radius: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    transform: translateY(1px);
+    
 }
 
 .tab-link:hover,
 .tab-link.active {
-    background-color: var(--black);
-    color: white;
+    opacity: 1;
+    border-bottom: 1px solid var(--brand-dark);
+}
+
+.filter-link {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
 }
 
 .filter-section {
@@ -490,6 +549,7 @@ footer {
 
 .news-img img {
     transition: all 0.3s ease-out;
+    border-radius: var(--round);
 }
 
 .news-img:hover img {
@@ -504,19 +564,23 @@ footer {
     font-size: var(--fs-sm);
 }
 
-.news-category a {
+.news-category a,
+.news-category .filter-link {
     color: #7a8265;
     font-weight: 500;
     transition: all 0.3s ease-out;
 }
 
-.news-category a:hover {
+.news-category a:hover,
+.news-category .filter-link:hover {
     color: var(--brand);
 }
 
 
 .news-date {
-    color: var(--gray-600);
+    font-size: var(--fs-sm);
+    font-family: "Switzer", sans-serif;
+    opacity: 0.6;
 }
 
 body[page="news"] .news-card h3 {
@@ -537,11 +601,21 @@ body[page="news"] .news-card h3 {
 }
 
 .tag {
-    border: 1px solid var(--brand);
-    padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
+    border: 1px solid color-mix(in srgb, var(--brand) 50%, transparent);
+    padding: 0.6rem 1rem;
+    border-radius: 1.6rem;
     font-size: var(--fs-sm);
     color: var(--brand);
+    transition: all 0.3s ease-out;
+}
+
+.tag a,
+.tag .filter-link {
+    color: var(--brand);
+}
+
+.tag:hover {
+    border: 1px solid var(--brand);
 }
 
 .pagination {
@@ -603,8 +677,19 @@ body[page="news"] .news-card h3 {
     }
     
     .news-tabs {
-        flex-direction: column;
-        align-items: center;
+        width: var(--content-width);
+        justify-content: flex-start;
+        overflow-x: scroll;
+        overflow-y: visible;
+   
+
+
+    }
+
+    .tab-link {
+        font-size: 1.5rem;
+        text-align: center;
+        white-space: nowrap;
     }
     
     .pagination {
@@ -680,6 +765,10 @@ body[page="article"] .container {
     line-height: 2;
     font-weight: 300;
     margin-bottom: 2rem;
+}
+
+.article-body img {
+    width: var(--about-width);
 }
 
 .article-tags {

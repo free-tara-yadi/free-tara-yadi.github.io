@@ -11,6 +11,7 @@ class ScriptManager {
 
     initializeAnimations() {
         const cleanups = [
+            preloader(),
             lenisInitialize(),
             parallaxEffect(),
             headerScrollHandler()
@@ -53,6 +54,28 @@ window.addEventListener('beforeunload', () => {
     }
 });
 
+function preloader() {
+
+    const ctx = gsap.context(() => {
+        const tl = gsap.timeline();
+        tl.to("body", {
+            autoAlpha: 1,
+            ease: "power2.out",
+        });
+
+        tl.to("main", {
+            opacity: 1,
+            ease: "power2.out",
+        });
+        tl.to("footer", {
+            opacity: 1,
+            ease: "power2.out",
+        });
+
+    });
+    return () => ctx.revert();
+
+}
 
 
 // Header 滾動隱藏/顯示功能

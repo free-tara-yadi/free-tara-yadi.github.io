@@ -448,8 +448,8 @@ class CMSLoader {
                 ${item.image ? `<img src="${item.image}" alt="${item.title}">` : ''}
                 </div>
                 <h3>${item.title}</h3>
-                <span class="news-date">${item.date}</span>
                 <p>${item.excerpt}</p>
+                <span class="news-date">${item.date}</span>
             </a>
         `;
         }).join('');
@@ -567,7 +567,7 @@ class CMSLoader {
 
     // 初始化新闻标签切换
     initNewsTabs() {
-        const tabLinks = document.querySelectorAll('.news-tab .tab-link');
+        const tabLinks = document.querySelectorAll('.news-tabs .tab-link');
         const newsContainer = document.getElementById('news-container');
         
         if (!tabLinks.length || !newsContainer) return;

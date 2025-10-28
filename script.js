@@ -107,6 +107,11 @@ function preloader() {
             ease: "power2.out",
         });
 
+        tl.to("main", {
+            opacity: 1,
+            ease: "power2.out",
+        });
+
     });
     return () => ctx.revert();
 
