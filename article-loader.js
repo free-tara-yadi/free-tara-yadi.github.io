@@ -190,6 +190,30 @@ class ArticleLoader {
         }).join('');
     }
 
+    // 渲染分享按钮
+    renderShareButtons(article) {
+        // 获取当前页面的完整URL
+        const currentUrl = window.location.href;
+        const encodedUrl = encodeURIComponent(currentUrl);
+        const encodedTitle = encodeURIComponent(article.title);
+
+        // Facebook分享链接
+        const facebookShareElement = document.getElementById('share-facebook');
+        if (facebookShareElement) {
+            facebookShareElement.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+            facebookShareElement.target = '_blank';
+            facebookShareElement.rel = 'noopener noreferrer';
+        }
+
+        // X (Twitter) 分享链接
+        const xShareElement = document.getElementById('share-x');
+        if (xShareElement) {
+            xShareElement.href = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
+            xShareElement.target = '_blank';
+            xShareElement.rel = 'noopener noreferrer';
+        }
+    }
+
     // 加载并渲染文章
     async loadArticle() {
         // 等待 CMS Loader 初始化完成
@@ -219,6 +243,7 @@ class ArticleLoader {
         this.renderTags(this.currentArticle.tags);
         this.renderNavigation(currentIndex);
         this.renderRelatedArticles(this.currentArticle);
+        this.renderShareButtons(this.currentArticle);
     }
 
     // 加载新闻
