@@ -5,13 +5,44 @@
     font-display: swap
 }
 
+* {
+    --font-serif: "Noto Serif SC", serif;
+    --about-width: 50vw;
+    --content-width: 70vw;
+    --site-margin: clamp(1rem, 0.417rem + 1.48vw, 2rem);
+    --fs-xs: clamp(1rem, 0.933rem + 0.1852vw, 1.2rem);
+    --fs-sm: clamp(1.2rem, 1.133rem + 0.1852vw, 1.4rem);
+    --fs-base: clamp(1.4rem, 1.333rem + 0.1852vw, 1.6rem);
+    --fs-lg: clamp(1.5rem, 1.4rem + 0.2778vw, 1.8rem);
+    --fs-2xl: clamp(1.8rem, 1.6rem + 0.5556vw, 2.4rem);
+    --fs-3xl: clamp(2rem, 1.6rem + 1.1111vw, 3.2rem);
+    --fs-4xl: clamp(2.4rem, 1.867rem + 1.4815vw, 4rem);
+    --fs-5xl: clamp(2.8rem, 2.133rem + 1.8519vw, 4.8rem);
+    --fs-6xl: clamp(3.2rem, 2.467rem + 2.037vw, 5.4rem);
+    --fs-7xl: clamp(4rem, 3.333rem + 1.8519vw, 6rem);
+    --fs-8xl: clamp(4.8rem, 8.133rem + 4.037vw, 16rem);
+    --text-stroke-width: 0;
+    --kv-img-size: clamp(100vw, 54.1667rem + 36vw, 160vw);
+    --kv-img-height: calc(var(--kv-img-size) * 1.1);
+    -webkit-text-stroke-width: var(--text-stroke-width);
+    --round: 4px;
+    --border-width: 0;
+    border-width: var(--border-width);
+    border-style: solid;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    --brand: #5B614A;
+    --brand-soft: #bfc0b6;
+    --brand-light: #D4D5CD;
+    --accent: #DEDFC6;
+    --brand-dark: #2D3129;
+    --orange: #B1582B;
+    --txt-white: #D5D5D5;
+    --white: #D6D6D6;
+    --black: #2D3129;
+    font-weight: initial;
 
-@font-face {
-    font-family: SweiSpringCJKsc;
-    src: url(https://cdn.jsdelivr.net/gh/max32002/swei-spring@1.068/WebFont/CJK%20SC/SweiSpringCJKsc-Medium.woff2) format("woff2")
-    , url(https://cdn.jsdelivr.net/gh/max32002/swei-spring@1.068/WebFont/CJK%20SC/SweiSpringCJKsc-Medium.woff) format("woff");
-    font-weight: 500;
-    font-display: swap
 }
 
 
@@ -57,44 +88,7 @@ body[page="article"], body[page="news"], html:has(body[page="news"]), html:has(b
 }
 
 
-* {
-    --about-width: 50vw;
-    --content-width: 70vw;
-    --site-margin: clamp(1rem, 0.417rem + 1.48vw, 2rem);
-    --fs-xs: clamp(1rem, 0.933rem + 0.1852vw, 1.2rem);
-    --fs-sm: clamp(1.2rem, 1.133rem + 0.1852vw, 1.4rem);
-    --fs-base: clamp(1.4rem, 1.333rem + 0.1852vw, 1.6rem);
-    --fs-lg: clamp(1.5rem, 1.4rem + 0.2778vw, 1.8rem);
-    --fs-2xl: clamp(1.8rem, 1.6rem + 0.5556vw, 2.4rem);
-    --fs-3xl: clamp(2rem, 1.6rem + 1.1111vw, 3.2rem);
-    --fs-4xl: clamp(2.4rem, 1.867rem + 1.4815vw, 4rem);
-    --fs-5xl: clamp(2.8rem, 2.133rem + 1.8519vw, 4.8rem);
-    --fs-6xl: clamp(3.2rem, 2.467rem + 2.037vw, 5.4rem);
-    --fs-7xl: clamp(4rem, 3.333rem + 1.8519vw, 6rem);
-    --fs-8xl: clamp(4.8rem, 8.133rem + 4.037vw, 16rem);
-    --text-stroke-width: 0;
-    --kv-img-size: clamp(100vw, 54.1667rem + 36vw, 160vw);
-    --kv-img-height: calc(var(--kv-img-size) * 1.1);
-    -webkit-text-stroke-width: var(--text-stroke-width);
-    --round: 4px;
-    --border-width: 0;
-    border-width: var(--border-width);
-    border-style: solid;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    --brand: #5B614A;
-    --brand-soft: #bfc0b6;
-    --brand-light: #D4D5CD;
-    --accent: #DEDFC6;
-    --brand-dark: #2D3129;
-    --orange: #B1582B;
-    --txt-white: #D5D5D5;
-    --white: #D6D6D6;
-    --black: #2D3129;
-    font-weight: initial;
 
-}
 
 .lines-wrap {
     overflow: clip;
@@ -422,7 +416,7 @@ footer {
     text-align: center;
     padding: 8rem 0;
     height: auto;
-    font-family: SweiSpringCJKsc;
+    font-family: var(--font-serif);
 }
 
 .news-title {
@@ -456,7 +450,7 @@ footer {
     justify-content: center;
     transition: all 0.3s ease;
     border-bottom: 1px solid color-mix(in srgb, var(--brand-dark) 20%, transparent);
-    overflow-y: visible;
+
 }
 
 
@@ -841,7 +835,7 @@ body[page="article"] .container {
 
 
 .kv {
-    font-family: SweiSpringCJKsc;
+    font-family: var(--font-serif);
     position: relative;
     height: fit-content;
     padding: 2.4rem 1.2rem;
@@ -926,7 +920,7 @@ body[page="article"] .container {
 } 
 
 .lastest-news a {
-    font-family: SweiSpringCJKsc;
+    font-family: var(--font-serif);
     margin-top: 2rem;
     color: #a6a6a6;
 }
@@ -1052,7 +1046,7 @@ body[page="article"] .container {
 }
 
 .intro {
-    font-family: SweiSpringCJKsc;
+    font-family: var(--font-serif);
     height: 500vh;
 
 }
@@ -1191,7 +1185,7 @@ body[page="article"] .container {
 
 .location {
     height: 300vh;
-    font-family: SweiSpringCJKsc;
+    font-family: var(--font-serif);
     text-align: center;
     padding: var(--site-margin);
     background-color: var(--white);
@@ -1236,7 +1230,7 @@ body[page="article"] .container {
     width: 100vw;
     height: 400vh;
     overflow: clip;
-    font-family: SweiSpringCJKsc;
+    font-family: var(--font-serif);
 }
 
 
@@ -1270,7 +1264,7 @@ body[page="article"] .container {
 }
 
 .who-tara .cn-title {
-    font-family: SweiSpringCJKsc;
+    font-family: var(--font-serif);
     font-size: var(--fs-3xl);
     color: var(--accent);
     opacity: 0.2;
@@ -1378,7 +1372,7 @@ body[page="article"] .container {
 
 
 .messages {
-    font-family: SweiSpringCJKsc;
+    font-family: var(--font-serif);
     display: flex;
     position: relative;
     flex-direction: column;
@@ -1490,7 +1484,7 @@ body[page="article"] .container {
 
 .follow-number::after {
     content: "人";
-    font-family: SweiSpringCJKsc;
+    font-family: var(--font-serif);
     font-size: var(--fs-base);
 
 }
@@ -1567,7 +1561,7 @@ section.info {
   .accordion {
     width: var(--content-width);
     overflow: hidden;
-    font-family: SweiSpringCJKsc;
+    font-family: var(--font-serif);
   }
   .tab__label,
   .tab__close {

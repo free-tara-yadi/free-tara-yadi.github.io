@@ -139,7 +139,7 @@ class CMSLoader {
         html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, url) => {
             // 移除 URL 中的 title 部分（引号内的内容）
             const cleanUrl = url.split('"')[0].trim();
-            return `<img src="${cleanUrl}" alt="${alt}">`;
+            return `<img src="${cleanUrl}" alt="${alt}" >`;
         });
         
         // 链接
