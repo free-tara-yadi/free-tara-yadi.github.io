@@ -1,0 +1,16 @@
+{{ define "main" }}
+<div class="container">
+  <h1>{{ .Title }}</h1>
+  <div class="content-list">
+    {{ range .Pages }}
+    <article>
+      <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+      {{ if .Params.excerpt }}
+      <p>{{ .Params.excerpt }}</p>
+      {{ end }}
+    </article>
+    {{ end }}
+  </div>
+</div>
+{{ end }}
+

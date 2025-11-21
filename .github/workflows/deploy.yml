@@ -27,6 +27,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -39,14 +48,20 @@ jobs:
           python3 rebuild-content-index.py
           echo "✅ 索引更新完成"
 
+      - name: Build with Hugo
+        run: |
+          echo "🏗️ 使用 Hugo 构建网站..."
+          hugo --minify
+          echo "✅ Hugo 构建完成"
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 上传整个仓库作为静态网站
-          path: '.'
+          # 上传 Hugo 构建的输出目录
+          path: './public'
 
   # 部署作业
   deploy:

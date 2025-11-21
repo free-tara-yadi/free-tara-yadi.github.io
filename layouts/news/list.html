@@ -1,0 +1,63 @@
+{{ define "main" }}
+<div class="news-header">
+  <a href="{{ "/" | relURL }}" class="news-header-title">FREE TARA YADI</a>
+</div>
+<div class="container">
+  <section class="news-hero">
+    <h1 class="news-title">News</h1>
+    <p class="news-subtitle">持续关心Tara 张雅笛的案情与近况</p>
+  </section>
+  <section class="news-content-section">
+    <div class="news-filter">
+      <div class="news-tabs">
+        <button data-category="" class="tab-link active">全部</button>
+        <button data-category="latest" class="tab-link">最新消息</button>
+        <button data-category="media" class="tab-link">媒体报导</button>
+        <button data-category="update" class="tab-link">案件进展</button>
+        <button data-category="action" class="tab-link">行动呼吁</button>
+      </div>
+  
+      <div class="filter-section">
+        <div class="filter-group">
+          <select id="tag-filter" class="filter-select">
+            <option value="">所有標籤</option>
+            <option value="tara">Tara张雅笛</option>
+            <option value="human-rights">人权</option>
+            <option value="student">学生</option>
+            <option value="international">国际声援</option>
+            <option value="legal">法律</option>
+            <option value="academic">学术</option>
+            <option value="tibet">西藏文化</option>
+            <option value="detention">拘留</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <select id="date-filter" class="filter-select">
+            <option value="">所有時間</option>
+            <option value="week">最近一週</option>
+            <option value="month">最近一個月</option>
+            <option value="quarter">最近三個月</option>
+            <option value="year">最近一年</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-listing">
+      <!-- 文章列表将在这里动态加载 -->
+    </div>
+
+    <div class="pagination">
+      <a href="#" class="pagination-link prev">上一页</a>
+      <span class="pagination-current">1 / 3</span>
+      <a href="#" class="pagination-link next">下一页</a>
+    </div>
+  </section>
+</div>
+{{ end }}
+
+{{ define "scripts" }}
+<script src="{{ "/js/news-loader.js" | relURL }}"></script>
+<script type="module" src="{{ "/js/pages.js" | relURL }}"></script>
+{{ end }}
+

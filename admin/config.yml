@@ -4,9 +4,9 @@ backend:
   branch: main
   site_domain: https://free-tara-yadi.github.io
 
-
-media_folder: "assets/uploads" # 上传的媒体文件存储位置
-public_folder: "/assets/uploads" # 公共访问路径
+# Hugo 静态资源路径
+media_folder: "static/assets/uploads" # 上传的媒体文件存储位置
+public_folder: "/assets/uploads" # 公共访问路径（Hugo 构建后的路径）
 
 collections:
   - name: "news" # 新闻文章集合
@@ -69,7 +69,7 @@ collections:
 singletons:
   - name: home
     label: Home Page
-    file: content/home.yaml
+    file: data/home.yaml
     fields:
       - { label: "最新消息Slug", name: "latest_news_slug", widget: "string", required: false, hint: "留空则自动显示最新文章" }
       - label: "關鍵數據"

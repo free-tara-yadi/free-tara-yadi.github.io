@@ -1,0 +1,49 @@
+baseURL = 'https://free-tara-yadi.github.io/'
+languageCode = 'zh-cn'
+defaultContentLanguage = 'zh'
+title = 'Free Tara Yadi'
+
+# 内容配置
+[content]
+  [content.markup]
+    [content.markup.goldmark]
+      [content.markup.goldmark.renderer]
+        unsafe = true
+    [content.markup.highlight]
+      style = 'github'
+      lineNos = false
+
+# 忽略 frontmatter 中的 published 字段（Hugo 会将其误认为日期）
+[frontmatter]
+  ignored = ['published']
+
+# 菜单配置
+[[menu.main]]
+  name = 'HOME'
+  url = '/'
+  weight = 1
+
+[[menu.main]]
+  name = 'NEWS'
+  url = '/news/'
+  weight = 2
+
+# 分类配置
+[taxonomies]
+  category = 'categories'
+  tag = 'tags'
+
+# 输出格式
+[outputs]
+  home = ['HTML', 'RSS']
+  page = ['HTML']
+
+# 参数配置
+[params]
+  description = '关注 Tara Zhang 张雅笛'
+  author = 'Free Tara Yadi'
+
+# 构建配置
+[build]
+  writeStats = false
+
