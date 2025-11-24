@@ -77,11 +77,11 @@ singletons:
           - {label: "网站标题", name: site_title, widget: string}
           - {label: "网站副标题", name: site_subtitle, widget: text}
           - {label: "Slogan", name: slogan, widget: text}
-            - label: "Button 1"
-              name: button_1
-              fields:
-              - {label: "按钮1文本", name: button_text, widget: string}
-              - {label: "按钮1链接", name: button_link, widget: string}
+          - label: "Button 1"
+            name: button_1
+            fields:
+            - {label: "按钮1文本", name: button_text, widget: string}
+            - {label: "按钮1链接", name: button_link, widget: string}
           - label: "Button 2"
             name: button_2
             fields:
