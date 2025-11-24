@@ -73,6 +73,7 @@ singletons:
     fields:
       - label: "Hero Section"
         name: hero_section
+        widget: list
         fields:
           - {label: "网站标题", name: site_title, widget: string}
           - {label: "网站副标题", name: site_subtitle, widget: text}
