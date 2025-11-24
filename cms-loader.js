@@ -121,6 +121,9 @@ class CMSLoader {
 
         return { frontmatter, body };
     }
+    
+
+    
 
     // 简单的 Markdown 转 HTML
     markdownToHtml(markdown) {
@@ -155,6 +158,48 @@ class CMSLoader {
         }).join('\n');
         
         return html;
+    }
+
+    renderHeroSection() {
+        if (!this.home || !this.home.hero_section) return;
+        
+        const hero = this.home.hero_section;
+        
+        // 渲染網站標題
+        const titleElement = document.querySelector('.kv-title');
+        if (titleElement && hero.site_title) {
+            titleElement.textContent = hero.site_title;
+        }
+        
+        // 渲染網站副標題
+        const subtitleElement = document.querySelector('.kv-subtitle');
+        if (subtitleElement && hero.site_subtitle) {
+            subtitleElement.textContent = hero.site_subtitle;
+        }
+        
+        // 渲染 Slogan
+        const sloganElement = document.querySelector('.slogan .lines-wrap div');
+        if (sloganElement && hero.slogan) {
+            sloganElement.textContent = hero.slogan;
+        }
+        
+        // 渲染按鈕
+        const buttons = document.querySelectorAll('.link-wrap button');
+        const links = document.querySelectorAll('.link-wrap a');
+        
+        if (buttons.length >= 1 && hero.btn_text) {
+            buttons[0].textContent = hero.btn_text;
+        }
+        if (links.length >= 1 && hero.btn_link) {
+            links[0].href = hero.btn_link;
+        }
+        
+        if (buttons.length >= 2 && hero.btn_text2) {
+            buttons[1].textContent = hero.btn_text2;
+        }
+        if (links.length >= 2 && hero.btn_link2) {
+            links[1].href = hero.btn_link2;
+        }
     }
 
     // 加载新闻
@@ -378,42 +423,89 @@ class CMSLoader {
             
             const content = await response.text();
             
-            // 尝试解析frontmatter格式
+            // 解析 YAML 內容
             let frontmatter = {};
             const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
             const match = content.match(frontmatterRegex);
             
             if (match) {
-                // 有frontmatter分隔符，使用parseFrontmatter
                 const result = this.parseFrontmatter(content);
                 frontmatter = result.frontmatter;
             } else {
-                // 没有frontmatter分隔符，直接解析YAML内容
                 const lines = content.split('\n');
-                lines.forEach(line => {
+                let i = 0;
+                let inHeroSection = false;
+                let heroData = {};
+                
+                while (i < lines.length) {
+                    const line = lines[i];
+                    const trimmedLine = line.trim();
+                    
+                    // 檢測 hero_section 區塊
+                    if (trimmedLine === 'hero_section:') {
+                        inHeroSection = true;
+                        i++;
+                        continue;
+                    }
+                    
+                    // 如果在 hero_section 區塊中
+                    if (inHeroSection) {
+                        // 檢測區塊結束（遇到非縮排的新欄位）
+                        if (line.match(/^[a-zA-Z_]+:/) && !line.startsWith(' ')) {
+                            frontmatter.hero_section = heroData;
+                            inHeroSection = false;
+                            heroData = {};
+                        } else if (trimmedLine && line.startsWith('  ')) {
+                            // 解析 hero_section 內的欄位
+                            const colonIndex = trimmedLine.indexOf(':');
+                            if (colonIndex > 0) {
+                                const key = trimmedLine.substring(0, colonIndex).trim();
+                                let value = trimmedLine.substring(colonIndex + 1).trim();
+                                
+                                // 移除引號
+                                if ((value.startsWith('"') && value.endsWith('"')) || 
+                                    (value.startsWith("'") && value.endsWith("'"))) {
+                                    value = value.slice(1, -1);
+                                }
+                                
+                                heroData[key] = value;
+                            }
+                        }
+                        i++;
+                        continue;
+                    }
+                    
+                    // 解析其他一般欄位
                     const colonIndex = line.indexOf(':');
-                    if (colonIndex > 0) {
+                    if (colonIndex > 0 && !line.startsWith(' ')) {
                         const key = line.substring(0, colonIndex).trim();
                         let value = line.substring(colonIndex + 1).trim();
                         
-                        // 移除引号
+                        // 移除引號
                         if ((value.startsWith('"') && value.endsWith('"')) || 
                             (value.startsWith("'") && value.endsWith("'"))) {
                             value = value.slice(1, -1);
                         }
                         
-                        // 处理布尔值
+                        // 處理布爾值
                         if (value === 'true') value = true;
                         if (value === 'false') value = false;
                         
-                        // 处理数字
+                        // 處理數字
                         if (!isNaN(value) && value !== '') {
                             value = Number(value);
                         }
                         
                         frontmatter[key] = value;
                     }
-                });
+                    
+                    i++;
+                }
+                
+                // 保存最後的 hero_section（如果還在區塊中）
+                if (inHeroSection && Object.keys(heroData).length > 0) {
+                    frontmatter.hero_section = heroData;
+                }
             }
             
             this.home = frontmatter;
@@ -423,6 +515,7 @@ class CMSLoader {
             return null;
         }
     }
+    
 
     // 渲染新闻
     renderNews(container, category = '') {
@@ -782,6 +875,7 @@ renderTimeline(container) {
         this.renderFAQ(document.getElementById('faq-container'));
         this.renderTimeline(document.getElementById('timeline-container')); 
         this.renderLatestNews();
+        this.renderHeroSection(); 
         
         // 初始化新闻标签切换
         this.initNewsTabs();
