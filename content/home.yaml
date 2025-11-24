@@ -30,4 +30,8 @@ timeline:
       - event_title: 7月31日
         event_content: 文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容
         event_image: /assets/uploads/rock.png
+        event_link: https://free-tara-yadi.github.io/article.html?slug=testing-testing
+      - event_title: 7月31日
+        event_content: 文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容
+        event_image: ''
         event_link: ''
