@@ -71,10 +71,7 @@ singletons:
     label: Home Page
     file: content/home.yaml
     fields:
-      - {label: "网站标题", name: site_title, widget: string}
-      - {label: "网站副标题", name: site_subtitle, widget: text}
-      - {label: "Slogan", name: slogan, widget: text}
-
+      
       - { label: "最新消息Slug", name: "latest_news_slug", widget: "string", required: false, hint: "留空则自动显示最新文章" }
       - label: "關鍵數據"
         name: data
