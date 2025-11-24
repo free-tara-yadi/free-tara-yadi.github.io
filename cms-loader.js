@@ -6,6 +6,7 @@ class CMSLoader {
         this.about = [];
         this.faq = [];
         this.home = null;
+        this.timeline = [];
         this.ready = false; // 标记是否已加载完成
     }
 
@@ -482,6 +483,178 @@ class CMSLoader {
         }).join('');
     }
 
+    // 新增載入時間線的方法
+async loadTimeline() {
+    try {
+        // 從home.yaml文件中載入timeline數據
+        const response = await fetch('./content/home.yaml');
+        if (!response.ok) {
+            console.warn('Failed to load home.yaml');
+            return [];
+        }
+        
+        const yamlContent = await response.text();
+        
+        // 清空現有的timeline數據
+        this.timeline = [];
+        
+        // 按行解析
+        const lines = yamlContent.split('\n');
+        let currentYear = null;
+        let currentEvent = null;
+        let inTimeline = false;
+        let inEvent = false;
+        let multilineField = null;
+        let multilineContent = '';
+        
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            const trimmedLine = line.trim();
+            
+            // 檢測timeline區塊開始
+            if (trimmedLine === 'timeline:') {
+                inTimeline = true;
+                continue;
+            }
+            
+            // 如果不在timeline區塊中，跳過
+            if (!inTimeline) continue;
+            
+            // 檢測timeline區塊結束（遇到非縮排的新欄位）
+            if (line.match(/^[a-zA-Z_]+:/) && !line.startsWith(' ')) {
+                inTimeline = false;
+                break;
+            }
+            
+            // 檢測新的年份項目
+            if (trimmedLine.startsWith('- year:')) {
+                // 保存前一個年份項目
+                if (currentYear) {
+                    if (currentEvent) {
+                        currentYear.events.push(currentEvent);
+                    }
+                    this.timeline.push(currentYear);
+                }
+                
+                const year = trimmedLine.replace('- year:', '').trim().replace(/['"]/g, '');
+                currentYear = {
+                    year: year,
+                    events: []
+                };
+                currentEvent = null;
+                inEvent = false;
+            }
+            // 檢測event區塊開始
+            else if (trimmedLine === 'event:' && currentYear) {
+                inEvent = true;
+            }
+            // 檢測新的事件項目
+            else if (trimmedLine.startsWith('- event_title:') && currentYear && inEvent) {
+                // 保存前一個事件
+                if (currentEvent) {
+                    currentYear.events.push(currentEvent);
+                }
+                
+                const title = trimmedLine.replace('- event_title:', '').trim().replace(/['"]/g, '');
+                currentEvent = {
+                    title: title,
+                    content: '',
+                    image: '',
+                    link: ''
+                };
+                multilineField = null;
+            }
+            // 檢測事件內容
+            else if (trimmedLine.startsWith('event_content:') && currentEvent) {
+                const content = trimmedLine.replace('event_content:', '').trim();
+                
+                // 檢查是否是多行內容
+                if (content === '|-' || content === '|') {
+                    multilineField = 'content';
+                    multilineContent = '';
+                } else {
+                    currentEvent.content = content.replace(/['"]/g, '');
+                }
+            }
+            // 檢測事件圖片
+            else if (trimmedLine.startsWith('event_image:') && currentEvent) {
+                currentEvent.image = trimmedLine.replace('event_image:', '').trim().replace(/['"]/g, '');
+                multilineField = null;
+            }
+            // 檢測事件連結
+            else if (trimmedLine.startsWith('event_link:') && currentEvent) {
+                currentEvent.link = trimmedLine.replace('event_link:', '').trim().replace(/['"]/g, '');
+                multilineField = null;
+            }
+            // 處理多行內容
+            else if (multilineField && line.startsWith('        ')) {
+                multilineContent += line.substring(8) + '\n';
+            }
+            // 多行內容結束
+            else if (multilineField && !line.startsWith('        ') && trimmedLine !== '') {
+                if (multilineField === 'content' && currentEvent) {
+                    currentEvent.content = multilineContent.trim();
+                }
+                multilineField = null;
+            }
+        }
+        
+        // 保存最後一個年份和事件
+        if (currentEvent && currentYear) {
+            if (multilineField === 'content') {
+                currentEvent.content = multilineContent.trim();
+            }
+            currentYear.events.push(currentEvent);
+        }
+        if (currentYear) {
+            this.timeline.push(currentYear);
+        }
+        
+        return this.timeline;
+    } catch (error) {
+        console.error('Error loading timeline:', error);
+        return [];
+    }
+}
+
+// 新增渲染時間線的方法
+renderTimeline(container) {
+    if (!container) return;
+    
+    if (this.timeline.length === 0) {
+        container.innerHTML = '<p>暫無時間線內容</p>';
+        return;
+    }
+
+    container.innerHTML = this.timeline.map(yearItem => {
+        const eventsHtml = yearItem.events.map(event => {
+            const hasImage = event.image && event.image.trim() !== '';
+            const hasLink = event.link && event.link.trim() !== '';
+            
+            return `
+                <div class="time-card">
+                    <div class="time-card-inner">
+                        <h3 class="title">${event.title}</h3>
+                        <p class="content">${event.content}</p>
+                        ${hasLink ? `<div class="read-more"><a href="${event.link}">阅读全文...</a></div>` : ''}
+                    </div>
+                    ${hasImage ? `<div class="time_img_wrap"><img src="${event.image}" alt="${event.title}"></div>` : ''}
+                </div>
+            `;
+        }).join('');
+        
+        return `
+            <div class="year-item">
+                <div class="year-title">
+                    <h3>${yearItem.year}</h3>
+                </div>
+                ${eventsHtml}
+            </div>
+        `;
+    }).join('');
+}
+
+
     // 渲染关于页面内容
     renderAbout(container) {
         if (!container) return;
@@ -598,6 +771,7 @@ class CMSLoader {
             this.loadMessages(),
             this.loadAbout(),
             this.loadFAQ(),
+            this.loadTimeline(),  // 新增
             this.loadHome()
         ]);
 
@@ -606,6 +780,7 @@ class CMSLoader {
         this.renderMessages(document.getElementById('messages-container'));
         this.renderAbout(document.getElementById('about-container'));
         this.renderFAQ(document.getElementById('faq-container'));
+        this.renderTimeline(document.getElementById('timeline-container')); 
         this.renderLatestNews();
         
         // 初始化新闻标签切换

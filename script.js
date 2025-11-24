@@ -117,10 +117,10 @@ function introAnimation() {
 
         const mm = gsap.matchMedia();
         
-        mm.add("(min-width: 1025px)", () => {
+        mm.add("(min-width: 769px)", () => {
             const tl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: ".intro",
+                    trigger: ".js-intro",
                     start: "top top",
                     end: "bottom center",
                     scrub: true,
@@ -130,12 +130,20 @@ function introAnimation() {
             });
     
             tl.set(".kv-img-wrap", { width: "100vw" });
+            tl.set(".fade-out", { filter: "brightness(1)" });
             tl.set(".intro-reveal", { opacity: 0 });
+            tl.set(".map-img", { filter: "brightness(0.3)" });
             tl.to(".fade-out", {
-                xPercent: 100,
+                opacity: 0,
                 duration: 0.3,
-                stagger: { amount: 0.06, from: "end" },
-                rotate: 20,
+                filter: "brightness(0.3)",
+                ease: "power3.out",
+            }, 0);
+
+            tl.to(".lines-wrap div", {
+                yPercent: 100,
+                duration: 0.3,
+                ease: "power3.out",
             }, 0);
 
             tl.to(".intro-reveal", {
@@ -167,7 +175,8 @@ function introAnimation() {
             tl.to(".map-img", {
                 scale: 1.6,
                 ease: "none",
-                duration: 0.2
+                duration: 0.2,
+                filter: "brightness(0.5)"
             });
             
     
@@ -177,10 +186,10 @@ function introAnimation() {
 
         });
 
-        mm.add("(max-width: 1024px)", () => {
+        mm.add("(max-width: 768px)", () => {
             const tl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: ".intro",
+                    trigger: ".js-intro",
                     start: "top top",
                     end: "bottom center",
                     scrub: true,
@@ -190,12 +199,13 @@ function introAnimation() {
             });
     
             tl.set(".kv-img-wrap", { width: "100vw" });
-            tl.to(".fade-out", {
-                xPercent: 100,
-                duration: 0.3,
-                stagger: { amount: 0.06, from: "end" },
-                rotate: 20,
-            }, 0);
+
+            tl.to(".intro-reveal", {
+                opacity: 1,
+                ease: "power2.inOut",
+                duration: 0.2
+            },0);
+
 
 
 
@@ -224,7 +234,7 @@ function aboutAnimation() {
     const ctx = gsap.context(() => {
         const tl2 = gsap.timeline({
             scrollTrigger: {
-                trigger: ".about-tara",
+                trigger: ".js-about",
                 start: "top top",
                 end: "bottom bottom",
                 scrub: true,
@@ -312,3 +322,4 @@ function headerScrollHandler() {
         window.removeEventListener('resize', handleResize);
     };
 }
+

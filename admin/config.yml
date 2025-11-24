@@ -66,6 +66,7 @@ collections:
       - { label: "是否发布", name: "published", widget: "boolean", default: true }
 
 
+
 singletons:
   - name: home
     label: Home Page
@@ -84,6 +85,18 @@ singletons:
         fields:
           - {label: "標題", name: about_title, widget: string}
           - {label: "内容", name: about_content, widget: text}
+
+      - label: "时间线"
+        name: timeline
+        widget: list
+        fields:
+          - {label: "年份", name: year, widget: string}
+          - {label: "事件", name: event, widget: list}
+            fields:
+              - {label: "标题", name: event_title, widget: string}
+              - {label: "内容", name: event_content, widget: text}
+              - {label: "图片", name: event_image, widget: image}
+              - {label: "链接", name: event_link, widget: string}
 
               
   
