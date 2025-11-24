@@ -74,19 +74,6 @@ singletons:
       - {label: "网站标题", name: site_title, widget: string}
       - {label: "网站副标题", name: site_subtitle, widget: text}
       - {label: "Slogan", name: slogan, widget: text}
-      
-      - label: "Button 1"
-        name: button_1
-        fields:
-        - {label: "按钮1文本", name: button_text, widget: string}
-        - {label: "按钮1链接", name: button_link, widget: string}
-      - label: "Button 2"
-        name: button_2
-        fields:
-        - {label: "按钮2文本", name: button_text2, widget: string}
-        - {label: "按钮2链接", name: button_link2, widget: string}
-
-      - divider: true #
 
       - { label: "最新消息Slug", name: "latest_news_slug", widget: "string", required: false, hint: "留空则自动显示最新文章" }
       - label: "關鍵數據"
