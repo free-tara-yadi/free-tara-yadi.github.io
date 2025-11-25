@@ -761,7 +761,9 @@ renderTimeline(container) {
             return `
                 <div class="slide-wrap">
                     <h3>${item.title}</h3>
-                    <p>${item.content}</p>
+                    <div>
+                     <p>${item.content}</p>
+                    </div>
                 </div>
             `;
         }).join('');

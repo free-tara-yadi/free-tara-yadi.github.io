@@ -16,7 +16,8 @@ class ScriptManager {
             parallaxEffect(),
             introAnimation(),
             aboutAnimation(),
-            headerScrollHandler()
+            headerScrollHandler(),
+            marqueeAnimation()
             // utility.js 的動畫
         ];
 
@@ -125,7 +126,7 @@ function introAnimation() {
                     end: "bottom center",
                     scrub: true,
                     refreshPriority: 2,
-                    invalidateOnRefresh: true
+                    invalidateOnRefresh: true,
                 }
             });
     
@@ -140,27 +141,35 @@ function introAnimation() {
                 ease: "power3.out",
             }, 0);
 
-            tl.to(".lines-wrap div", {
-                yPercent: 100,
-                duration: 0.3,
-                ease: "power3.out",
-            }, 0);
-
             tl.to(".intro-reveal", {
                 opacity: 1,
                 ease: "power2.inOut",
                 duration: 0.2
-            }, 0);
-    
+            }, 0);    
 
             tl.to(".kv-img-wrap", {
                 width: "50vw",
                 ease: "none",
-                duration: 0.2
+                duration: 0.2,
+                onStart: () => {
+                    gsap.to(".news-anchor", {
+                        transform: "translateY(-50%) translateX(0)",
+                        duration: 0.3,
+                        ease: "power3.out",
+                    });
+                },
+
+                onReverseComplete: () => {
+                    gsap.to(".news-anchor", {
+                        transform: "translateY(-50%) translateX(-150%)",
+                        duration: 0.3,
+                        ease: "power3.out",
+                    });
+                }
             },0);
 
             tl.to(".main-img", {
-                scale: 1.6,
+                scale: 1.2,
                 ease: "none",
                 duration: 0.2
             },0);
@@ -198,12 +207,26 @@ function introAnimation() {
                 }
             });
     
-            tl.set(".kv-img-wrap", { width: "100vw" });
 
             tl.to(".intro-reveal", {
                 opacity: 1,
                 ease: "power2.inOut",
-                duration: 0.2
+                duration: 0.2,
+                onStart: () => {
+                    gsap.to(".news-anchor", {
+                        transform: "translateY(-50%) translateX(0)",
+                        duration: 0.3,
+                        ease: "power3.out",
+                    });
+                },
+
+                onReverseComplete: () => {
+                    gsap.to(".news-anchor", {
+                        transform: "translateY(-50%) translateX(-150%)",
+                        duration: 0.3,
+                        ease: "power3.out",
+                    });
+                }
             },0);
 
 

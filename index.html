@@ -31,7 +31,7 @@
       </nav>
     </header>
       <main>
-        
+        <a href="#news" class="news-anchor">前往最新消息↓</a>
 
         <div class="container">
           <section class="kv-sect pv-d">
@@ -49,7 +49,7 @@
               
             </div>
             <div class="kv-items-wrap">
-              <h4 class="slogan lines-wrap"><div>失去自由——不该成为发声的代价</div></h4>
+              <h4 class="slogan lines-wrap fade-out"><div>失去自由——不该成为发声的代价</div></h4>
               <div class="lastest-news mobile-hide fade-out" id="latest-news">
                 <div>
                   <h6>最新消息</h6>
@@ -151,6 +151,29 @@
             
           </section>
 
+          <section class="about-sect js-about">
+            <div class="about-bg">
+              <div class="about-bg-inner">
+
+                <img class="about-bg" src="./assets/about-bg.webp" alt="" loading="lazy">
+                <img class="about-slide-img" src="./assets/about_slide1.webp" alt="" loading="lazy">
+                <img class="about-slide-img" src="./assets/about_slide2.webp" alt="" loading="lazy">
+                <img class="about-slide-img" src="./assets/about_slide3.webp" alt="" loading="lazy">
+                <img class="doves" src="./assets/doves.png" alt="" loading="lazy">
+        
+              </div>
+              <div class="title-wrap ph-d pv-d">
+                <h2 class="en-title">Who Tara Is</h2>
+                <h2 class="cn-title">关于Tara</h2>
+              </div>
+            </div>
+            <div class="about-content" id="about-container">
+              <!-- About content will be loaded dynamically from CMS -->
+            </div>
+            
+
+          </section>
+
           <section class="timeline-sect">
             <div class="time-left">
               <div class="deco_img">
@@ -171,28 +194,7 @@
             </div>
           </section>
             
-          <section class="about-sect js-about">
-            <div class="about-bg">
-              <div class="about-bg-inner">
-
-                <img class="about-bg" src="./assets/about-bg.webp" alt="" loading="lazy">
-                <img class="about-slide-img" src="./assets/about_slide1.webp" alt="" loading="lazy">
-                <img class="about-slide-img" src="./assets/about_slide2.webp" alt="" loading="lazy">
-                <img class="about-slide-img" src="./assets/about_slide3.webp" alt="" loading="lazy">
-                <img class="doves" src="./assets/doves.png" alt="" loading="lazy">
-        
-              </div>
-              <div class="title-wrap ph-d pv-d">
-                <h2 class="en-title">Who Tara Is</h2>
-                <h2 class="cn-title">关于 Tara</h2>
-              </div>
-            </div>
-            <div class="about-content" id="about-container">
-              <!-- About content will be loaded dynamically from CMS -->
-            </div>
-            
-
-          </section>
+          
 
           <section class="messages ph-d pv-d">
             <div class="messages-bg">
@@ -200,27 +202,22 @@
             </div>
             <div class="message-top">
               <h2 class="en-title">Messages</h2>
-              <div class="message-card-wrap" id="messages-container">
+              <div class="message-card-wrap" id="messages-container" >
                 <!-- 留言将通过 CMS 动态加载 -->
               </div>
               <button class="btn-primary lg">留言给Tara</button>
             </div>
             <div class="follow-card">
               
-              <div class="follow-r">
-                <h3>一起持续关注Tara的案件</h3>
-                  <div class="link-wrap">
-                    <button class="btn-secondary">为Tara集气</button>
-                    <button class="btn-secondary">了解我能做什么</button>
-                  </div>
-              </div>
+              <h3>一起持续关注Tara的案件</h3>
+                <button class="btn-secondary">了解我能做什么</button>
               
             </div>
             
 
           </section>
           <section class="info ph-d pv-d">
-            <div class="news">
+            <div class="news" id="news">
               <h2 class="en-title">News</h2>
               <div class="news-tabs">
                 <a href="#" class="tab-link active" data-category="">全部</a>

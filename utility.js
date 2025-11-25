@@ -69,7 +69,48 @@ function lenisInitialize() {
         // Then add this to ensure it doesn't override your scrollTo command
         smoothWheel: true,
         wheelMultiplier: 1.2,
-        infinite: false
+        infinite: false,
+        anchors: true
+    });
+
+
+    window.lenisInstance = lenis;
+
+    const anchorLinks = Array.from(document.querySelectorAll('a[href^="#"]'));
+    const anchorCleanup = [];
+
+    anchorLinks.forEach((link) => {
+        const handler = (event) => {
+            const href = link.getAttribute("href");
+            if (!href || href === "#" || href === "#0") {
+                return;
+            }
+
+            // ignore external hashes
+            if (!href.startsWith("#")) {
+                return;
+            }
+
+            const target = document.querySelector(href);
+            if (!target) {
+                return;
+            }
+
+            event.preventDefault();
+
+            const durationAttr = parseFloat(link.getAttribute("data-scroll-duration"));
+            const offsetAttr = parseFloat(link.getAttribute("data-scroll-offset"));
+
+            lenis.scrollTo(target, {
+                duration: isNaN(durationAttr) ? 1.5 : durationAttr,
+                offset: isNaN(offsetAttr) ? 0 : offsetAttr,
+                // ease out cubic
+                easing: (t) => 1 - Math.pow(1 - t, 3)
+            });
+        };
+
+        link.addEventListener("click", handler);
+        anchorCleanup.push(() => link.removeEventListener("click", handler));
     });
 
     // Force scroll to top immediately
@@ -98,8 +139,12 @@ function lenisInitialize() {
             lenis.destroy();
             gsap.ticker.remove(tickerCallback);
         }
+
+        anchorCleanup.forEach((cleanup) => cleanup());
+        window.lenisInstance = undefined;
     };
 }
+
 
 
 

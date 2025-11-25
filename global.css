@@ -44,6 +44,11 @@
     --white: #D6D6D6;
     --black: #2D3129;
     font-weight: initial;
+    --grid-row-gap: 0;
+    grid-row-gap: var(--grid-row-gap);
+    --grid-column-gap: 0;
+    grid-column-gap: var(--grid-column-gap);
+
 
 }
 
@@ -182,6 +187,14 @@ body[page="article"], body[page="news"], html:has(body[page="news"]), html:has(b
 [class*="self-c"] {
     align-self: center;
 }
+
+[wb-data="marquee"] {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow: clip;
+    white-space: nowrap;
+  }
 
 
 p {
@@ -347,6 +360,30 @@ a {
     line-height: 1;
 }
 
+
+.news-anchor {
+    position: fixed;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%) translateX(-150%);
+    background-color: var(--white);
+    color: var(--brand-dark);
+    padding: 2.4rem 1.2rem;
+    border-radius: 4px;
+    border: 1px solid color-mix(in srgb, var(--brand) 10%, transparent);
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: var(--fs-lg);
+    letter-spacing: 0.2em;
+    font-family: var(--font-serif);
+    z-index: 99;
+    transition: filter 0.3s ease-out;
+}
+
+.news-anchor:hover {
+    filter: brightness(0.95);
+
+}
 
 footer {
     display: flex;
@@ -921,8 +958,9 @@ body[page="article"] .news-header {
     }
 
     .kv-subtitle {
+        font-family: var(--font-cn-sans);
         font-size: var(--fs-2xl);
-        font-weight: 300;
+        font-weight: 400;
         margin-top: 2rem;
         margin-bottom: 8rem;
     }
@@ -1037,7 +1075,7 @@ body[page="article"] .news-header {
 .kv-img-wrap {
     position: relative;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     align-self: center;
     width: 100vw;
     height: 100vh;
@@ -1051,6 +1089,7 @@ body[page="article"] .news-header {
     width: 100%;
     height: 110%;
     transform: scale(1);
+    object-position: top;
 }
 
 img.kv-overlay {
@@ -1207,7 +1246,7 @@ img.kv-overlay {
 .about-sect {
     position: relative;
     width: 100vw;
-    height: 400vh;
+    height: fit-content;
     overflow: clip;
     font-family: var(--font-serif);
 
@@ -1235,16 +1274,17 @@ img.kv-overlay {
     
         .en-title {
             font-family: var(--font-display);
-            font-size: 9vw;
+            font-size: 8vw;
             color: var(--accent);
             opacity: 0.2;
         
         }
     
         .cn-title {
-            font-family: var(--font-serif);
-            font-size: var(--fs-3xl);
+            font-family: var(--font-cn-sans);
+            font-size: var(--fs-2xl);
             color: var(--accent);
+            letter-spacing: 0.05em;
             opacity: 0.2;
         }
     }
@@ -1255,6 +1295,7 @@ img.kv-overlay {
         left: 0;
         object-fit: cover;
         height: auto;
+        opacity: 0;
 
     }
 
@@ -1295,29 +1336,34 @@ img.kv-overlay {
         display: flex;
         flex-direction: column;
         align-items: center;
+        position: relative;
         width: 100vw;
         color: var(--accent);
-        position: absolute;
-        top: 0;
-        left: 0;
-        margin-top: 20%;
+        padding: 20% 0 100vh;
+        gap: 40vh;
 
 
         h3 {
+            display: flex;
+            gap: 1rem;
             width: 50rem;
-            font-size: var(--fs-3xl);
+            font-family: var(--font-cn-sans);
+            font-size: var(--fs-sm);
+            font-weight: 500;
             margin-top: 1rem;
             line-height: 1.2;
+
 
         }
 
         p {
             width: 100%;
             line-height: 2;
-            font-size: var(--fs-base);
+            font-size: 1.5rem;
             opacity: 0.8;
             font-weight: 400;
             text-align: left;
+            flex-shrink: 0;
         }
 
 
@@ -1327,12 +1373,33 @@ img.kv-overlay {
         width: var(--about-width);
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        gap: 2rem;
-        padding: 28vh 0;
-        
+        justify-content: space-between;
+        min-height: 70vh;
+        gap: 4rem;
+        padding: 2rem 4rem 3.6rem;
+        background: var(--brand);
+        color: var(--white);
+
+
+        h3::before {
+            content: "■";
+            
+        }
+    }
+
+    .slide-wrap:nth-child(1) {
+        background: #2453AC;
+        color: var(--white);
+    }
+
+    .slide-wrap:nth-child(2) {
+        background: var(--white);
+        color: var(--black);
+    }
+
+    .slide-wrap:nth-child(3) {
+        background: #B53A31;
+        color: var(--white);
     }
 
     .slide-wrap:not(:first-child) {
@@ -1501,6 +1568,7 @@ img.kv-overlay {
 }
 
 .message-top {
+    width: 100vw;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -1514,6 +1582,7 @@ img.kv-overlay {
     display: flex;
     flex-direction: row;
     gap: 2rem;
+    padding-right: 2rem;
     
 }
 
@@ -1524,6 +1593,10 @@ img.kv-overlay {
     color: var(--black);
     padding: 2rem;
     border-radius: var(--round);
+
+    span {
+        white-space: wrap;
+    }
 }
 
 .message-card p {
@@ -1545,7 +1618,7 @@ img.kv-overlay {
     
     position: relative;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: var(--content-width);
@@ -1553,7 +1626,7 @@ img.kv-overlay {
     padding: 8rem 4rem;
     border-radius: var(--round);
     z-index: 2;
-    gap: 4rem;
+    gap: 1rem;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
@@ -1747,8 +1820,13 @@ section.info {
         }
 
         .about-content {
+
+            .slide-wrap {
+                min-height: 60vh;
+            }
+
             h3 {
-                font-size: var(--fs-4xl);
+                font-size: var(--fs-lg);
             }
     
             p {
@@ -1927,15 +2005,14 @@ section.info {
 
     .about-sect {
 
-        height: 500vh;
-        
-        .slide-wrap {
-            padding: 24vh 0;
-        }
 
         .about-content {
             p {
                 font-size: 1.5rem;
+            }
+
+            .slide-wrap {
+                padding: 1rem 2rem 3rem;
             }
         }
     }
@@ -1976,8 +2053,12 @@ section.info {
         row-gap: 4rem;
     }
 
+    .message-card-wrap {
+        flex-direction: column;
+    }
+
     .message-card {
-        width: 24rem;
+        width: 32rem;
     }
 
     section.info {
