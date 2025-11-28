@@ -24,14 +24,22 @@ timeline:
   - year: '2025'
     event:
       - event_title: 7月31日
-        event_content: 文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容
+        event_content: 张雅笛在云南迪庆藏区被捕，随后被长沙国安跨省带回长沙，以”煽动分裂国家罪“的名义关押在国安看守所。
         event_image: ''
         event_link: ''
-      - event_title: 7月31日
-        event_content: 文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容
+      - event_title: 9月1-3日
+        event_content: 张雅笛原计划出国日期。
         event_image: /assets/uploads/rock.png
         event_link: https://free-tara-yadi.github.io/article.html?slug=testing-testing
-      - event_title: 7月31日
-        event_content: 文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容文本内容
+      - event_title: 9月5日
+        event_content: 张雅笛被捕超过37天。超过这一天，意味着她很可能已经被监察院批准逮捕。
+        event_image: ''
+        event_link: ''
+      - event_title: 9月16日
+        event_content: 人权工作者、”709律师“江天勇在湖南长沙的咖啡厅与张雅笛母亲见面，提供法律咨询。随即两人被便衣国安人员带走，均被扣押讯问长达8小时。
+        event_image: ''
+        event_link: ''
+      - event_title: 9月17日
+        event_content: 张雅笛的朋友正式对外界公开案件情况。
         event_image: ''
         event_link: ''
