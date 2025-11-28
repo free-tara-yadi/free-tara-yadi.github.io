@@ -66,6 +66,7 @@ html {
     color: var(--txt-white);
     letter-spacing: 0%;
     text-transform: uppercase;
+    font-family: var(--font-cn-sans);
 
 }
 
@@ -1105,7 +1106,6 @@ img.kv-overlay {
 
     .map-img {
         opacity: 0;
-
     }
     
     .intro-reveal {
@@ -1134,7 +1134,6 @@ img.kv-overlay {
             font-size: var(--fs-lg);
             line-height: 2;
             font-weight: 300;
-            color: var(--brand-light);
         }
     }
 
@@ -1274,18 +1273,15 @@ img.kv-overlay {
     
         .en-title {
             font-family: var(--font-display);
-            font-size: 8vw;
-            color: var(--accent);
-            opacity: 0.2;
-        
+            font-size: 7vw;
+            color: #4a4e3f;        
         }
     
         .cn-title {
             font-family: var(--font-cn-sans);
             font-size: var(--fs-2xl);
-            color: var(--accent);
+            color: #4a4e3f; 
             letter-spacing: 0.05em;
-            opacity: 0.2;
         }
     }
 
