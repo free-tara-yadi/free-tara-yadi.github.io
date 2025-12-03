@@ -404,6 +404,7 @@ footer {
         font-weight: 300;
         opacity: 0.2;
 
+
     }
   }
 
@@ -424,9 +425,11 @@ footer {
 
   footer p {
     width: 100%;
+    font-size: var(--fs-xs);
     text-align: center;
     padding: 3rem;
     opacity: 0.6;
+    line-height: 1.5;
   }
 
 
@@ -1505,6 +1508,7 @@ img.kv-overlay {
                 font-size: 1.5rem;
                 line-height: 2;
                 margin-top: 1rem;
+                text-transform: none;
             }
 
             .read-more {
