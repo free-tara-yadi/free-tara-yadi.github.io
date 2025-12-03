@@ -1,3 +1,11 @@
+hero_section:
+  site_title: Free Tara Yadi
+  site_subtitle: 关注 Tara Zhang 张雅笛
+  slogan: 失去自由——不该成为发声的代价
+  btn_text: 为Tara写明信片
+  btn_link: https://www.instagram.com/free_tara_yadi/
+  btn_text2: Linktree
+  btn_link2: https://linktr.ee/free_tara_yadi
 latest_news_slug: young-student
 data:
   - data_title: 失踪與拘押
@@ -23,14 +31,34 @@ about:
 timeline:
   - year: '2025'
     event:
+      - event_title: 7月5日
+        event_content: 张雅笛乘飞机从荷兰史基辅（Schiphol）机场返回中国
+        event_image: ''
+        event_link: ''
+      - event_title: 7月中旬
+        event_content: 张雅笛前往云南大理参加佛教研学团。
+        event_image: ''
+        event_link: ''
+      - event_title: 7月25/26日
+        event_content: 张雅笛前往云南迪庆藏区，并在社交媒体上分享和当地居民的合照。
+        event_image: ''
+        event_link: ''
+      - event_title: 7月30日北京时间约12点
+        event_content: 张雅笛最后一次和她的伴侣Kalsang Yarphel更新状态，并发布了最后一条朋友圈。
+        event_image: ''
+        event_link: ''
+      - event_title: 7月31日到8月7日之间
+        event_content: 张雅笛的小红书ip地址显示从“云南”变更为“湖南”。
+        event_image: ''
+        event_link: ''
       - event_title: 7月31日
         event_content: 张雅笛在云南迪庆藏区被捕，随后被长沙国安跨省带回长沙，以”煽动分裂国家罪“的名义关押在国安看守所。
         event_image: ''
         event_link: ''
       - event_title: 9月1-3日
         event_content: 张雅笛原计划出国日期。
-        event_image: /assets/uploads/rock.png
-        event_link: https://free-tara-yadi.github.io/article.html?slug=testing-testing
+        event_image: ''
+        event_link: ''
       - event_title: 9月5日
         event_content: 张雅笛被捕超过37天。超过这一天，意味着她很可能已经被监察院批准逮捕。
         event_image: ''
@@ -41,5 +69,39 @@ timeline:
         event_link: ''
       - event_title: 9月17日
         event_content: 张雅笛的朋友正式对外界公开案件情况。
+        event_image: ''
+        event_link: ''
+      - event_title: 9月23日
+        event_content: |-
+          人权观察（HRW）发布报导，并呼吁中国当局立即、无条件释放张雅笛。
+          路透社、世界报发表对张雅笛案的报导。
+        event_image: ''
+        event_link: https://www.hrw.org/news/2025/09/23/china-free-student-advocate-for-tibetan-rights
+      - event_title: 9月25日
+        event_content: 泰晤士报发表对张雅笛案的报导。
+        event_image: ''
+        event_link: https://www.thetimes.com/world/asia/article/china-detains-london-student-tibet-5rcwphss3
+      - event_title: 9月26日
+        event_content: 美联社发表对张雅笛案的报导。
+        event_image: ''
+        event_link: https://apnews.com/article/china-tibet-overseas-activist-detained-zhang-yadi-88cdd785d368df0eaa01afec663def63
+      - event_title: 9月30日
+        event_content: 英国卫报发表对张雅笛案的报导。
+        event_image: ''
+        event_link: https://www.theguardian.com/global-development/2025/sep/30/china-tibet-student-zhang-yadi-dalai-lama-university-soas-london-transnational-represssion
+      - event_title: 10月4日
+        event_content: 英国的藏人与华人社群在张雅笛母校SOAS为她举行烛光晚会，并呼吁SOAS为张雅笛发声。
+        event_image: ''
+        event_link: ''
+      - event_title: 10月8日
+        event_content: 国际特赦组织发起行动倡议，邀请参与者为张雅笛向中国国安部写信。
+        event_image: ''
+        event_link: ''
+      - event_title: 10月11日
+        event_content: 香港观察（HKW）创办人Benedict Rogers发表文章，呼吁法国、英国政推动张雅笛的释放。
+        event_image: ''
+        event_link: ''
+      - event_title: 10月23日
+        event_content: 欧洲议会议员Miriam Lexmann公开声援张雅笛，呼吁中国当局停止迫害并立刻释放她。
         event_image: ''
         event_link: ''
