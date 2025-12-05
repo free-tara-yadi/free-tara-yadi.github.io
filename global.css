@@ -1137,6 +1137,7 @@ img.kv-overlay {
             font-size: var(--fs-lg);
             line-height: 2;
             font-weight: 300;
+            text-transform: none;
         }
     }
 
@@ -1191,6 +1192,7 @@ img.kv-overlay {
                 font-weight: 300;
                 letter-spacing: 0em;
                 
+                
             }
         }
     
@@ -1235,6 +1237,7 @@ img.kv-overlay {
         padding: 6rem 0rem;
         margin-top: 8rem;
         border-bottom: 1px solid color-mix(in srgb, var(--brand-soft) 50%, transparent);
+        
     }
     
     
@@ -1378,6 +1381,7 @@ img.kv-overlay {
         padding: 2rem 4rem 3.6rem;
         background: var(--brand);
         color: var(--white);
+        text-transform: none;
 
 
         h3::before {
