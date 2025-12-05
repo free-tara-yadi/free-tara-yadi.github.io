@@ -1690,6 +1690,7 @@ section.info {
     justify-content: center;
     align-self: center;
     gap: 3rem;
+    text-transform: none;
 
 }
 

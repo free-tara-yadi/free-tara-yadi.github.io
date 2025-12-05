@@ -6,8 +6,7 @@ date: 2025-10-24
 category: media
 tags:
   - legal
-  - student
-  - tibet
+  - popular-science
 excerpt: 文章內文文字文章內文文字文章內文文字文章內文文字，文章內文文字文章內文文字文章內文文字，文章內文文字文章內文文字，文章內文文字文章內文文字
 excerpt_en: ''
 image: /assets/rock.png

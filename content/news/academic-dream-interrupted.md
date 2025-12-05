@@ -5,9 +5,9 @@ title_en: ''
 date: 2025-10-18
 category: media
 tags:
-  - tara
-  - academic
-  - student
+  - France
+  - legal
+  - student-organizations
 excerpt: 章內文文字文章內文文字文章內文文字，文章內文文字文章內文文字文章內文文字，文章內文文字文章內文文字，文章內文文字文章內文文字
 excerpt_en: ''
 image: /assets/rock4.png

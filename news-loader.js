@@ -174,14 +174,25 @@ class NewsLoader {
     // 获取标签中文名
     getTagLabel(tag) {
         const labels = {
-            'tara': 'Tara张雅笛',
-            'human-rights': '人权',
-            'student': '学生',
-            'international': '国际声援',
+            'government-officials': '政府人员发言',
+            'NGO': 'NGO',
+            'student-organizations': '学生组织',
+            'overseas-Chinese-community': '海外华语社群',
             'legal': '法律',
-            'academic': '学术',
-            'tibet': '西藏',
-            'detention': '拘留'
+            'popular-science': '科普',
+            'UK': '英国',
+            'USA': '美国',
+            'France': '法国',
+            'Netherlands': '荷兰',
+            'Germany': '德国',
+            'Italy': '意大利',
+            'Australia': '澳大利亚',
+            'Taiwan': '台湾',
+            'Hong Kong': '香港',
+            'independent-journalists': '独立记者',
+            'overseas-Chinese-media': '海外华语媒体',
+            'overseas-Tibetan-media': '海外藏人媒体',
+            'Asian-media': '亚洲媒体'
         };
         return labels[tag] || tag;
     }

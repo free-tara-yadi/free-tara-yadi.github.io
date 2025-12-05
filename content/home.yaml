@@ -47,12 +47,12 @@ timeline:
         event_content: 张雅笛最后一次和她的伴侣Kalsang Yarphel更新状态，并发布了最后一条朋友圈。
         event_image: ''
         event_link: ''
-      - event_title: 7月31日到8月7日之间
-        event_content: 张雅笛的小红书 ip 地址显示从“云南”变更为“湖南”。
-        event_image: ''
-        event_link: ''
       - event_title: 7月31日
         event_content: 张雅笛在云南迪庆藏区被捕，随后被长沙国安跨省带回长沙，以”煽动分裂国家罪“的名义关押在国安看守所。
+        event_image: ''
+        event_link: ''
+      - event_title: 7月31日到8月7日之间
+        event_content: 张雅笛的小红书 ip 地址显示从“云南”变更为“湖南”。
         event_image: ''
         event_link: ''
       - event_title: 9月1-3日

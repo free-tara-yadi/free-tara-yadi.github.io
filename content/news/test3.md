@@ -5,7 +5,7 @@ title_en: ''
 date: 2025-10-08
 category: action
 tags:
-  - media
+  - US
 excerpt: 文章內文文字文章內文文字文章內文文字文章內文文字，文章內文文字文章內文文字文章，內文文字，文章內文文字文章內文文字文章內文文字文章內文文字
 excerpt_en: ''
 image: /assets/rock.png
