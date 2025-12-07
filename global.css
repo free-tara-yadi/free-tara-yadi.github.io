@@ -41,7 +41,8 @@
     --brand-dark: #2D3129;
     --orange: #B1582B;
     --txt-white: #D5D5D5;
-    --white: #D6D6D6;
+    --white: #F1F1F1;
+    --gray-100: #D6D6D6;
     --black: #2D3129;
     font-weight: initial;
     --grid-row-gap: 0;
@@ -497,8 +498,9 @@ footer {
 
 .news-subtitle {
     font-size: var(--fs-lg);
-    color: var(--gray-600);
-    font-weight: 300;
+    color: var(--brand);
+    font-weight: 400;
+    font-family: var(--font-cn-sans);
 }
 
 .news-content-section {
@@ -847,33 +849,38 @@ body[page="article"] .news-header {
     flex-direction: column;
     gap: 2rem;
     padding: 12rem;
-}
-.article-body h2 {
-    font-size: var(--fs-4xl);
-}
 
-.article-body h3 {
-    font-size: var(--fs-3xl);
-}
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 500;
+    }
 
-.article-body h4 {
-    font-size: var(--fs-2xl);
-}
+    h2 {
+        font-size: var(--fs-3xl);
+    }
 
-.article-body h5 {
-    font-size: var(--fs-lg);
-}
+    h3 {
+        font-size: var(--fs-2xl);
+    }
 
-.article-body p {
-    width: var(--about-width);
-    font-size: var(--fs-lg);
-    line-height: 2;
-    font-weight: 300;
-    margin-bottom: 2rem;
-}
+    h4 {
+        font-size: var(--fs-2xl);
+    }
 
-.article-body img {
-    width: var(--about-width);
+    h5 {
+        font-size: var(--fs-lg);
+    }
+
+    p {
+        width: var(--about-width);
+        font-size: var(--fs-lg);
+        line-height: 2;
+        font-weight: 300;
+        margin-bottom: 2rem;
+    }
+
+    img {
+        width: var(--about-width);
+    }
 }
 
 .article-tags {
@@ -1380,7 +1387,7 @@ img.kv-overlay {
         gap: 4rem;
         padding: 2rem 4rem 3.6rem;
         background: var(--brand);
-        color: var(--white);
+        color: var(--gray-100);
         text-transform: none;
 
 
@@ -1392,17 +1399,17 @@ img.kv-overlay {
 
     .slide-wrap:nth-child(1) {
         background: #2453AC;
-        color: var(--white);
+        color: var(--gray-100);
     }
 
     .slide-wrap:nth-child(2) {
-        background: var(--white);
+        background: var(--gray-100);
         color: var(--black);
     }
 
     .slide-wrap:nth-child(3) {
         background: #B53A31;
-        color: var(--white);
+        color: var(--gray-100);
     }
 
     .slide-wrap:not(:first-child) {
@@ -1430,7 +1437,7 @@ img.kv-overlay {
         justify-content: space-between;
         height: 100vh;
         
-        border-right: 1px solid #c3c3c3;
+        border-right: 1px solid #c3c3c38a;
 
         .deco_img {
             width: 60%;
