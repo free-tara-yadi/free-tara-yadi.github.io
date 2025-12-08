@@ -3,10 +3,10 @@ hero_section:
   site_subtitle: 关注 Tara Zhang 张雅笛
   slogan: 失去自由——不该成为发声的代价
   btn_text: 为Tara写明信片
-  btn_link: https://www.instagram.com/free_tara_yadi/
+  btn_link: https://free-tara-yadi.github.io/article.html?slug=postcard-guide
   btn_text2: Linktree
   btn_link2: https://linktr.ee/free_tara_yadi
-latest_news_slug: young-student
+latest_news_slug: postcard-guide
 data:
   - data_title: 失踪與拘押
     data_content: Tara 在海外就读并参与人权倡议后失踪，据报导被国安人员带走，至今已被羁押多天
