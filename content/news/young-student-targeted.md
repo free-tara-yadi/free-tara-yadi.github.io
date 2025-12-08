@@ -2,6 +2,7 @@
 title: 文章标题文章标题文章标题文章标题文章标题
 slug: young-student
 title_en: ''
+thumbnail: /assets/uploads/rock2.png
 date: 2025-10-22
 category: update
 tags:

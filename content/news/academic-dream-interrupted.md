@@ -2,6 +2,7 @@
 title: 文章标题文章标题文章标题文章标题文章标题2
 slug: academic
 title_en: ''
+thumbnail: /assets/uploads/rock2.png
 date: 2025-10-18
 category: media
 tags:

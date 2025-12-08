@@ -2,8 +2,8 @@
 title: Tara 明信片行动指南
 slug: postcard-guide
 title_en: ''
-thumbnail: /assets/uploads/rock4.png
-image: /assets/uploads/rock4.png
+thumbnail: /assets/postcard/postcard_thumbnail.webp
+image: /assets/postcard/postcard_thumbnail.webp
 date: 2025-12-08
 category: action
 tags:
@@ -14,17 +14,20 @@ excerpt_en: ''
 body_en: ''
 published: true
 ---
+
+>[🔦 Campaign Toolkit声援工具包链接](https://drive.google.com/drive/folders/1OyghvwnydH8qYEWa4VDnB-R2Y_IGIwWv)
+
 ## 为什么要写明信片？
 
-\*\*低风险\*\*\
+**低风险**\
 明信片可以匿名，不需要填写真实姓名或地址。你可以在任何时间、任何地点完成，不必集体参与，也无需公开身份。
 对于希望保持低风险参与的朋友来说，这是一种最安全的关怀方式。
 
-\*\*高回报\*\*\
+**高回报**\
 在中国的看守所体系里，所有信件都必须经过管教与检查人员。这意味着即使明信片没有被转交给当事人，阅读它的人也会看到「外界在关注」。
 对在押者而言，这种关注有时能换来具体的待遇改善；而对体制内的人来说，也会成为他们日常对话里的一个提醒：这个在押者不是一个默默无名的“嫌犯”，而是一个被许多人关心的人。
 
-\*\*对当事人的意义\*\*\
+**对当事人的意义**\
 在高压羁押中，孤独感与尊严被剥夺是最难承受的部分。
 一句简单的问候或者幽默，都可能在良心犯漫长的日子里成为「外面的世界还在」的证明，成为Ta们维系自己生而为人之尊严的重要支持。
 
@@ -66,17 +69,29 @@ Post code: 410000
 
 此外，我们的画师也为Tara制作了一版她的专属明信片，上面是Tara和她的猫猫Dongtso。欢迎在[文件夹](https://drive.google.com/drive/folders/1OyghvwnydH8qYEWa4VDnB-R2Y_IGIwWv)中下载并打印使用。
 
-![](image6.jpg)
+![](/assets/postcard/postcard_6.jpg)
+![](/assets/postcard/postcard_9.jpg)
 
 
 排版：如果追求划算，一张A4纸可以放下4张明信片，打印出来比一般明信片略微小一点点，但不影响使用。
 打印：在有预算的情况下，打印的数量越多越划算，例如50张。此外，有一些线上的打印店会比实体店铺便宜。
+
+![](/assets/postcard/postcard_7.jpg)
+
 ⬆️ 这种纸的材质叫 Fiore Paper，比一般的明信片纸贵一半左右，在欧洲大量打印的价格约为每张A4纸3.3欧（每张明信片0.8欧）。
 
 ### 明信片內容例子：
 
+![](/assets/postcard/postcard_4.jpg)
+![](/assets/postcard/postcard_5.jpg)
+![](/assets/postcard/postcard_8.jpg)
+![](/assets/postcard/postcard_3.jpg)
+
 罗胜春给丈夫丁家喜的监狱去信中，会为他寄围棋死活题和棋谱：
+![](/assets/postcard/postcard_2.jpg)
+
 Tara 比较喜欢藏传佛教的经文：
+![](/assets/postcard/postcard_1.jpg)
 
 ---
 

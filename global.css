@@ -895,6 +895,10 @@ body[page="article"] .news-header {
         font-weight: 500;
     }
     
+    a {
+        color: #7a8265;
+        text-decoration: underline;
+    }
 
     img {
         width: var(--about-width);

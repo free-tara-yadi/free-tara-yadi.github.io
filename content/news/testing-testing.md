@@ -2,6 +2,7 @@
 title: 文章标题文章标题5
 slug: testing-testing
 title_en: ''
+thumbnail: /assets/uploads/rock2.png
 date: 2025-10-24
 category: media
 tags:

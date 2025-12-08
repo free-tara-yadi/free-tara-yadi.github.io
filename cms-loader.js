@@ -539,7 +539,7 @@ class CMSLoader {
             return `
             <a class="news-card" href="article.html?slug=${slug}">
                 <div class="news-img">
-                ${item.image ? `<img src="${item.image}" alt="${item.title}">` : ''}
+                ${item.thumbnail ? `<img src="${item.thumbnail}" alt="${item.title}">` : ''}
                 </div>
                 <h3>${item.title}</h3>
                 <p>${item.excerpt}</p>

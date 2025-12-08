@@ -274,7 +274,7 @@ class NewsLoader {
             return `
                 <div class="news-card">
                     <a href="article.html?slug=${article.slug}" class="news-img">
-                        <img src="${article.image || './assets/rock.png'}" alt="${article.title}">
+                        <img src="${article.thumbnail || './assets/rock.png'}" alt="${article.title}">
                     </a>
                     <div class="news-item-meta">
                             <span class="news-category">

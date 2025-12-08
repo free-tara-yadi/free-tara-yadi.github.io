@@ -2,6 +2,7 @@
 title: 文章标题文章标题文章标题6
 slug: test2
 title_en: ''
+thumbnail: /assets/uploads/rock2.png
 date: 2025-06-24
 category: update
 tags:

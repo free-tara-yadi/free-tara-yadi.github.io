@@ -2,6 +2,7 @@
 title: Test3
 slug: test3
 title_en: ''
+thumbnail: /assets/uploads/rock2.png
 date: 2025-10-08
 category: action
 tags:
