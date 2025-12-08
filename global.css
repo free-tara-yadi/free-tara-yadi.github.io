@@ -851,6 +851,17 @@ body[page="article"] .news-header {
     gap: 2rem;
     padding: 12rem 16rem;
     font-size: var(--fs-lg);
+    text-transform: none;
+
+    ul {
+        list-style-position: inside;
+    }
+
+    li {
+        font-weight: 500;
+        line-height: 1.5;
+        margin-bottom: 4px;
+    }
 
     h1, h2, h3, h4, h5, h6 {
         font-weight: 500;
@@ -865,7 +876,7 @@ body[page="article"] .news-header {
     }
 
     h4 {
-        font-size: var(--fs-2xl);
+        font-size: clamp(1.6rem, 1.6rem + 0.5556vw, 2rem);
     }
 
     h5 {
@@ -879,10 +890,33 @@ body[page="article"] .news-header {
         font-weight: 300;
         margin-bottom: 2rem;
     }
+
+    strong {
+        font-weight: 500;
+    }
     
 
     img {
         width: var(--about-width);
+    }
+
+    blockquote {
+        background-color: #f9f9f9;
+        padding: 2rem 3rem 0;
+        margin-bottom: 2rem;
+    }
+
+    hr {
+        background-color: #1818182c; 
+        height: 1px;
+        margin-bottom: 2rem;
+    }
+
+    li::marker {
+        content: "•";
+        color: var(--brand);
+        font-size: var(--fs-lg);
+        margin-right: 1rem;
     }
 }
 

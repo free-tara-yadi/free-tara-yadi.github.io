@@ -1,23 +1,50 @@
-// 文章页面加载器
+// 文章頁面加載器
 class ArticleLoader {
     constructor() {
         this.news = [];
         this.currentArticle = null;
+        this.markedLoaded = false;
     }
 
-    // 从 URL 获取 slug
+    // 加載 marked.js CDN
+    async loadMarked() {
+        if (this.markedLoaded || window.marked) {
+            return;
+        }
+
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js';
+            script.onload = () => {
+                this.markedLoaded = true;
+                // 配置 marked 選項
+                if (window.marked) {
+                    marked.setOptions({
+                        breaks: true, // 改為 false，保持標準 Markdown 換行處理
+                        gfm: true,
+                        pedantic: false
+                    });
+                }
+                resolve();
+            };
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
+
+    // 從 URL 獲取 slug
     getSlugFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get('slug');
     }
 
-    // 从 URL 获取 ID
+    // 從 URL 獲取 ID
     getIdFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get('id');
     }
 
-    // 根据 slug 或 ID 查找文章
+    // 根據 slug 或 ID 查找文章
     findArticle() {
         const slug = this.getSlugFromUrl();
         const id = this.getIdFromUrl();
@@ -36,7 +63,7 @@ class ArticleLoader {
         return null;
     }
 
-    // 获取分类标签
+    // 獲取分類標籤
     getCategoryLabel(category) {
         const labels = {
             'latest': '最新消息',
@@ -48,7 +75,7 @@ class ArticleLoader {
         return labels[category] || category;
     }
 
-    // 获取标签中文名
+    // 獲取標籤中文名
     getTagLabel(tag) {
         const labels = {
             'government-officials': '政府人员发言',
@@ -74,20 +101,20 @@ class ArticleLoader {
         return labels[tag] || tag;
     }
 
-    // 渲染文章标题
+    // 渲染文章標題
     renderTitle(title) {
         const titleElement = document.getElementById('article-title');
         if (titleElement) {
             titleElement.textContent = title;
         }
 
-        // 更新面包屑
+        // 更新麵包屑
         const breadcrumb = document.querySelector('.breadcrumb-current');
         if (breadcrumb) {
             breadcrumb.textContent = title;
         }
 
-        // 更新页面标题
+        // 更新頁面標題
         document.title = `${title} | Free Tara Yadi`;
     }
 
@@ -108,23 +135,29 @@ class ArticleLoader {
         }
     }
 
-    // 渲染文章图片
+    // 渲染文章圖片
     renderImage(image) {
         const imageElement = document.getElementById('article-image');
         if (imageElement && image) {
-            imageElement.innerHTML = `<img src="${image}" alt="文章配图">`;
+            imageElement.innerHTML = `<img src="${image}" alt="文章配圖">`;
         }
     }
 
-    // 渲染文章内容
+    // 渲染文章內容 - 使用 marked.js
     renderBody(body) {
         const bodyElement = document.getElementById('article-body');
-        if (bodyElement) {
-            bodyElement.innerHTML = body;
+        if (bodyElement && window.marked) {
+            try {
+                const html = marked.parse(body);
+                bodyElement.innerHTML = html;
+            } catch (error) {
+                console.error('Error rendering markdown:', error);
+                bodyElement.innerHTML = `<p>${body}</p>`;
+            }
         }
     }
 
-    // 渲染文章标签
+    // 渲染文章標籤
     renderTags(tags) {
         const tagsElement = document.getElementById('article-tags');
         if (tagsElement && tags && tags.length > 0) {
@@ -139,7 +172,7 @@ class ArticleLoader {
         }
     }
 
-    // 渲染文章导航（上一篇/下一篇）
+    // 渲染文章導航(上一篇/下一篇)
     renderNavigation(currentIndex) {
         const navElement = document.getElementById('article-navigation');
         if (!navElement) return;
@@ -172,18 +205,18 @@ class ArticleLoader {
         navElement.innerHTML = navHTML;
     }
 
-    // 渲染相关文章
+    // 渲染相關文章
     renderRelatedArticles(currentArticle) {
         const relatedElement = document.getElementById('related-articles');
         if (!relatedElement) return;
 
-        // 获取除当前文章外的其他文章，最多3篇
+        // 獲取除當前文章外的其他文章,最多3篇
         const relatedArticles = this.news
             .filter(article => article.title !== currentArticle.title)
             .slice(0, 3);
 
         if (relatedArticles.length === 0) {
-            relatedElement.innerHTML = '<p>暂无相关文章</p>';
+            relatedElement.innerHTML = '<p>暫無相關文章</p>';
             return;
         }
 
@@ -192,7 +225,7 @@ class ArticleLoader {
             return `
                 <article class="news-card">
                     <a href="article.html?slug=${slug}" class="news-img">
-                        <img src="${article.image || './assets/rock.png'}" alt="相关文章">
+                        <img src="${article.image || './assets/rock.png'}" alt="相關文章">
                     </a>
                     <h3>${article.title}</h3>
                     <p class="news-date">${article.date}</p>
@@ -201,14 +234,14 @@ class ArticleLoader {
         }).join('');
     }
 
-    // 渲染分享按钮
+    // 渲染分享按鈕
     renderShareButtons(article) {
-        // 获取当前页面的完整URL
+        // 獲取當前頁面的完整URL
         const currentUrl = window.location.href;
         const encodedUrl = encodeURIComponent(currentUrl);
         const encodedTitle = encodeURIComponent(article.title);
 
-        // Facebook分享链接
+        // Facebook分享鏈接
         const facebookShareElement = document.getElementById('share-facebook');
         if (facebookShareElement) {
             facebookShareElement.href = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
@@ -216,7 +249,7 @@ class ArticleLoader {
             facebookShareElement.rel = 'noopener noreferrer';
         }
 
-        // X (Twitter) 分享链接
+        // X (Twitter) 分享鏈接
         const xShareElement = document.getElementById('share-x');
         if (xShareElement) {
             xShareElement.href = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
@@ -225,17 +258,20 @@ class ArticleLoader {
         }
     }
 
-    // 加载并渲染文章
+    // 加載並渲染文章
     async loadArticle() {
+        // 先加載 marked.js
+        await this.loadMarked();
+
         // 等待 CMS Loader 初始化完成
         if (!window.cmsLoader || !window.cmsLoader.news || window.cmsLoader.news.length === 0) {
-            // 如果 CMS Loader 还没初始化，手动加载新闻
+            // 如果 CMS Loader 還沒初始化,手動加載新聞
             await this.loadNews();
         } else {
             this.news = window.cmsLoader.news;
         }
 
-        // 查找当前文章
+        // 查找當前文章
         this.currentArticle = this.findArticle();
 
         if (!this.currentArticle) {
@@ -243,10 +279,10 @@ class ArticleLoader {
             return;
         }
 
-        // 获取当前文章的索引
+        // 獲取當前文章的索引
         const currentIndex = this.news.indexOf(this.currentArticle);
 
-        // 渲染文章内容
+        // 渲染文章內容
         this.renderTitle(this.currentArticle.title);
         this.renderMeta(this.currentArticle);
         this.renderImage(this.currentArticle.image);
@@ -257,7 +293,7 @@ class ArticleLoader {
         this.renderShareButtons(this.currentArticle);
     }
 
-    // 加载新闻
+    // 加載新聞
     async loadNews() {
         try {
             const indexResponse = await fetch('content/news/news.json');
@@ -277,11 +313,11 @@ class ArticleLoader {
                     const { frontmatter, body } = this.parseFrontmatter(content);
 
                     if (frontmatter.published !== false) {
-                        // 使用文件名作为 slug（因为现在文件名就是基于 slug 的）
+                        // 使用文件名作為 slug(因為現在文件名就是基於 slug 的)
                         const fileSlug = file.replace('.md', '');
                         this.news.push({
                             ...frontmatter,
-                            body: this.markdownToHtml(body),
+                            body: body, // 保持原始 markdown 格式
                             slug: frontmatter.slug || fileSlug
                         });
                     }
@@ -312,7 +348,7 @@ class ArticleLoader {
         const lines = frontmatterText.split('\n');
         let i = 0;
 
-        // 简单解析 YAML frontmatter
+        // 簡單解析 YAML frontmatter
         while (i < lines.length) {
             const line = lines[i];
             const colonIndex = line.indexOf(':');
@@ -321,36 +357,36 @@ class ArticleLoader {
                 const key = line.substring(0, colonIndex).trim();
                 let value = line.substring(colonIndex + 1).trim();
                 
-                // 检查是否是多行数组格式 (tags:\n  - item1\n  - item2)
+                // 檢查是否是多行數組格式 (tags:\n  - item1\n  - item2)
                 if (value === '' && i + 1 < lines.length && lines[i + 1].trim().startsWith('-')) {
                     const arrayItems = [];
-                    i++; // 移动到下一行
+                    i++; // 移動到下一行
                     
-                    // 收集所有数组项
+                    // 收集所有數組項
                     while (i < lines.length && lines[i].trim().startsWith('-')) {
                         const item = lines[i].trim().substring(1).trim();
-                        // 移除引号
+                        // 移除引號
                         const cleanItem = item.replace(/^["']|["']$/g, '');
                         arrayItems.push(cleanItem);
                         i++;
                     }
                     
                     frontmatter[key] = arrayItems;
-                    continue; // 跳过i++，因为已经在循环中增加了
+                    continue; // 跳過i++,因為已經在循環中增加了
                 }
                 
-                // 移除引号
+                // 移除引號
                 if ((value.startsWith('"') && value.endsWith('"')) || 
                     (value.startsWith("'") && value.endsWith("'"))) {
                     value = value.slice(1, -1);
                 }
                 
-                // 处理内联数组
+                // 處理內聯數組
                 if (value.startsWith('[') && value.endsWith(']')) {
                     value = value.slice(1, -1).split(',').map(v => v.trim().replace(/["']/g, ''));
                 }
                 
-                // 处理布尔值
+                // 處理布爾值
                 if (value === 'true') value = true;
                 if (value === 'false') value = false;
                 
@@ -363,46 +399,7 @@ class ArticleLoader {
         return { frontmatter, body };
     }
 
-    // 简单的 Markdown 转 HTML
-    markdownToHtml(markdown) {
-        let html = markdown;
-        
-        // 标题
-        html = html.replace(/^##### (.*$)/gim, '<h5>$1</h5>');
-        html = html.replace(/^#### (.*$)/gim, '<h4>$1</h4>');
-        html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-        html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-        html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
-        
-        // 粗体和斜体
-        html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
-        // 渲染分隔线
-        html = html.replace(/^---$/gm, '<hr class="divider">');
-        
-        // 图片（必须在链接之前处理，因为图片语法类似但以!开头）
-        // 处理 ![alt](url) 或 ![alt](url "title") 格式
-        html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, url) => {
-            // 移除 URL 中的 title 部分（引号内的内容）
-            const cleanUrl = url.split('"')[0].trim();
-            return `<img src="${cleanUrl}" alt="${alt}">`;
-        });
-        
-        // 链接
-        html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
-        
-        // 段落
-        html = html.split('\n\n').map(para => {
-            if (para.trim() && !para.startsWith('<')) {
-                return `<p>${para.trim()}</p>`;
-            }
-            return para;
-        }).join('\n');
-        
-        return html;
-    }
-
-    // 渲染错误信息
+    // 渲染錯誤信息
     renderError() {
         const titleElement = document.getElementById('article-title');
         if (titleElement) {
@@ -411,7 +408,7 @@ class ArticleLoader {
 
         const bodyElement = document.getElementById('article-body');
         if (bodyElement) {
-            bodyElement.innerHTML = '<p>抱歉，未找到该文章。</p>';
+            bodyElement.innerHTML = '<p>抱歉,未找到該文章。</p>';
         }
     }
 
@@ -421,12 +418,12 @@ class ArticleLoader {
     }
 }
 
-// 等待 DOM 加载完成后初始化
+// 等待 DOM 加載完成後初始化
 window.addEventListener('DOMContentLoaded', async () => {
-    // 等待一小段时间确保 cms-loader 已经初始化
+    // 等待一小段時間確保 cms-loader 已經初始化
     await new Promise(resolve => setTimeout(resolve, 100));
     
-    // 如果 cms-loader 存在但还没加载完成，等待它完成
+    // 如果 cms-loader 存在但還沒加載完成,等待它完成
     if (window.cmsLoader && window.cmsLoader.init) {
         await window.cmsLoader.init();
     }
@@ -435,4 +432,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     window.articleLoader = new ArticleLoader();
     await window.articleLoader.init();
 });
+
+
 
