@@ -22,12 +22,13 @@ collections:
       - { label: "标题", name: "title", widget: "string" }
       - { label: "Slug", name: "slug", widget: "string", required: true, hint: "URL路径，例如：my-news-article" }
       - { label: "标题 (英文)", name: "title_en", widget: "string", required: false }
+      - { label: "缩略图", name: "thumbnail", widget: "image", required: true }
+      - { label: "封面图片", name: "image", widget: "image", required: false }
       - { label: "日期", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
       - { label: "分类", name: "category", widget: "select", options: ["latest", "media", "action", "update"] }
       - { label: "标签", name: "tags", widget: "select", multiple: true, allow_add: true, options: ["government-officials", "NGO", "student-organizations", "overseas-Chinese-community", "legal", "popular-science", "UK", "USA", "France", "Netherlands", "Germany", "Italy", "Australia", "Taiwan", "Hong Kong", "independent-journalists", "overseas-Chinese-media", "overseas-Tibetan-media", "Asian-media"], default: [] }
       - { label: "摘要", name: "excerpt", widget: "text" }
       - { label: "摘要 (英文)", name: "excerpt_en", widget: "text", required: false }
-      - { label: "封面图片", name: "image", widget: "image", required: false }
       - { label: "正文", name: "body", widget: "markdown" }
       - { label: "正文 (英文)", name: "body_en", widget: "markdown", required: false }
       - { label: "是否发布", name: "published", widget: "boolean", default: true }

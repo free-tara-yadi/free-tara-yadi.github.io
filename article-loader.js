@@ -88,7 +88,7 @@ class ArticleLoader {
         }
 
         // 更新页面标题
-        document.title = `${title} - Free Tara Yadi`;
+        document.title = `${title} | Free Tara Yadi`;
     }
 
     // 渲染文章元信息
@@ -377,6 +377,8 @@ class ArticleLoader {
         // 粗体和斜体
         html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+        // 渲染分隔线
+        html = html.replace(/^---$/gm, '<hr class="divider">');
         
         // 图片（必须在链接之前处理，因为图片语法类似但以!开头）
         // 处理 ![alt](url) 或 ![alt](url "title") 格式

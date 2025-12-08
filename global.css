@@ -845,10 +845,12 @@ body[page="article"] .news-header {
 
 
 .article-body  {
+    width: var(--content-width);
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    padding: 12rem;
+    padding: 12rem 16rem;
+    font-size: var(--fs-lg);
 
     h1, h2, h3, h4, h5, h6 {
         font-weight: 500;
@@ -871,12 +873,13 @@ body[page="article"] .news-header {
     }
 
     p {
-        width: var(--about-width);
+        
         font-size: var(--fs-lg);
         line-height: 2;
         font-weight: 300;
         margin-bottom: 2rem;
     }
+    
 
     img {
         width: var(--about-width);
