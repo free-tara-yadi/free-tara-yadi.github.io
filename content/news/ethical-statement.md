@@ -2,6 +2,8 @@
 title: 伦理声明——Tara张雅笛关注组的伦理框架， 以及我们为什么在遵循它们
 slug: ethical-statement
 title_en: ''
+thumbnail: /assets/uploads/rock2.png
+image: /assets/rock2.png
 date: 2025-10-02
 category: latest
 tags:
@@ -9,7 +11,6 @@ tags:
   - popular-science
 excerpt: 文章內文文字文章內文文字文章內文文字文章內文文字，文章內文文字文章內文文字文章，內文文字，文章內文文字文章內文文字文章內文文字文章內文文字
 excerpt_en: ''
-image: /assets/rock2.png
 body_en: ''
 published: true
 id: 4
